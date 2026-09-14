@@ -30,55 +30,62 @@
 
   <main class="page">
     <div class="site-shell">
-      <div class="preview-notice">Portal preview — Discord sign-in and live submissions will switch on when the recruitment backend is connected.</div>
+      <div class="preview-notice">Recruitment portal setup is still in progress. Discord sign-in and live submissions are not enabled yet.</div>
 
       <section class="portal-frame">
         <div class="portal-head">
           <div>
-            <p class="portal-eyebrow">Development Team Applications</p>
-            <h1 class="portal-title">Join the Void team.</h1>
-            <p class="portal-subtitle">Apply for an open development role, keep track of your application, and continue the recruitment process from one place.</p>
+            <p class="portal-eyebrow">Pokémon Void · Developer Recruitment</p>
+            <h1 class="portal-title">Development Applications</h1>
+            <p class="portal-subtitle">Apply for an open role, follow your application, and continue the recruitment process from one place.</p>
           </div>
           <div class="status-plate" aria-label="Recruitment status">
-            <strong>Recruitment status</strong>
-            <span>Selected roles open</span>
+            <strong>Applications</strong>
+            <span>Open for selected roles</span>
           </div>
         </div>
 
         <div class="portal-body">
           <div class="menu-grid">
             <div>
-              <section class="panel">
-                <h2 class="panel-title">Start an application</h2>
+              <section class="panel application-desk">
+                <h2 class="panel-title">Application Desk</h2>
                 <div class="panel-body">
-                  <p class="intro-copy">Sign in with Discord, choose the role or roles you want to apply for, then complete the questions shown for those roles.</p>
-                  <div class="action-row">
-                    <a class="game-button" href="#" data-discord-login data-return-to="apply.html">Continue with Discord</a>
-                    <a class="game-button secondary" href="apply.html">Preview the application</a>
+                  <p class="intro-copy">Use your Discord account to create a recruitment profile. You can apply for more than one currently open role.</p>
+
+                  <div class="portal-menu" aria-label="Recruitment menu">
+                    <a class="portal-menu-item" href="#" data-discord-login data-return-to="apply.html">
+                      <span class="portal-menu-number">01</span>
+                      <span><strong>Start an application</strong><small>Sign in with Discord and begin.</small></span>
+                      <span class="portal-menu-arrow" aria-hidden="true">▶</span>
+                    </a>
+                    <a class="portal-menu-item" href="apply.html">
+                      <span class="portal-menu-number">02</span>
+                      <span><strong>View application questions</strong><small>See the current form before signing in.</small></span>
+                      <span class="portal-menu-arrow" aria-hidden="true">▶</span>
+                    </a>
+                    <a class="portal-menu-item" href="status.html">
+                      <span class="portal-menu-number">03</span>
+                      <span><strong>My application</strong><small>Check your current status or interview ticket.</small></span>
+                      <span class="portal-menu-arrow" aria-hidden="true">▶</span>
+                    </a>
                   </div>
+
                   <div class="privacy-strip">
                     <span class="privacy-mark" aria-hidden="true">i</span>
-                    <div>Your Discord password and 2FA details are never entered on this site. Discord authentication is handled on Discord's own authorization page.</div>
+                    <div>Discord sign-in happens on Discord's own authorization page. This site never asks for your Discord password or 2FA code.</div>
                   </div>
                 </div>
               </section>
 
               <section class="panel">
-                <h2 class="panel-title">How recruitment works</h2>
+                <h2 class="panel-title">What happens after you apply</h2>
                 <div class="panel-body">
                   <ol class="step-list">
-                    <li>
-                      <div><strong>Open the recruitment portal</strong><p>Follow the recruitment link from the Pokémon Void Discord server and sign in with Discord.</p></div>
-                    </li>
-                    <li>
-                      <div><strong>Complete your application</strong><p>Choose one or more open roles and answer the general and role-specific questions.</p></div>
-                    </li>
-                    <li>
-                      <div><strong>Watch for an update</strong><p>Application updates can be sent to you through Discord while the Directors review your submission.</p></div>
-                    </li>
-                    <li>
-                      <div><strong>Continue to interview</strong><p>If you progress, the Directors will continue with a private interview ticket. Some applicants may later be invited to a secluded Discord area for live questions.</p></div>
-                    </li>
+                    <li><div><strong>Submit your application</strong><p>Choose one or more open roles and complete the questions relevant to you.</p></div></li>
+                    <li><div><strong>Director review</strong><p>Your application enters the private Director queue for review.</p></div></li>
+                    <li><div><strong>Application update</strong><p>Important updates can be sent to your Discord account so you do not have to keep refreshing the site.</p></div></li>
+                    <li><div><strong>Interview or onboarding</strong><p>If you progress, the Directors will continue the process with you directly. Some roles may move to Discord for a live interview.</p></div></li>
                   </ol>
                 </div>
               </section>
@@ -86,15 +93,15 @@
 
             <aside>
               <section class="panel">
-                <h2 class="panel-title">Roles currently open</h2>
+                <h2 class="panel-title">Open roles</h2>
                 <div class="panel-body">
                   <div class="role-board">
                     <div class="role-tile" data-role="programming"><strong>Programming</strong><span>Pokémon Essentials, RPG Maker XP, events, plugins, UI and game systems.</span></div>
-                    <div class="role-tile" data-role="move-animation"><strong>Move Animation</strong><span>Move animation work reviewed directly by the relevant Director.</span></div>
-                    <div class="role-tile" data-role="spriting"><strong>Spriting</strong><span>Sprites, icons, palettes, tilesets and related pixel-art work.</span></div>
-                    <div class="role-tile" data-role="music"><strong>Music</strong><span>Composition and music work suited to Pokémon Void.</span></div>
+                    <div class="role-tile" data-role="move-animation"><strong>Move Animation</strong><span>Move animation work reviewed by the relevant Director.</span></div>
+                    <div class="role-tile" data-role="spriting"><strong>Spriting</strong><span>Pokémon sprites, trainers, overworlds, icons, palettes and tilesets.</span></div>
+                    <div class="role-tile" data-role="music"><strong>Music</strong><span>Composition and sound work suited to Pokémon Void.</span></div>
                   </div>
-                  <div class="closed-note">Other development roles are temporarily closed to applications.</div>
+                  <div class="closed-note">Other development roles are temporarily closed.</div>
                 </div>
               </section>
 
@@ -102,10 +109,11 @@
                 <h2 class="panel-title">Before you apply</h2>
                 <div class="panel-body">
                   <ul class="info-list">
+                    <li>Applicants of any age may apply.</li>
+                    <li>Applicants under 18 require guardian permission, a portfolio, and a referral.</li>
                     <li>You may apply for more than one open role.</li>
-                    <li>Applicants must be at least 16 years old.</li>
-                    <li>Applicants aged 16–17 require guardian permission, a portfolio, and a referral.</li>
-                    <li>You can return to your profile to check your current application status.</li>
+                    <li>Your Discord account will identify your recruitment profile, so you will not need a separate username and password.</li>
+                    <li>Have examples of your work ready where the role asks for them.</li>
                   </ul>
                 </div>
               </section>

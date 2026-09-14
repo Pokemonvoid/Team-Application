@@ -1,10 +1,10 @@
 # Recruitment Backend Contract
 
-This document is a working interface outline for the Cloudflare backend and the tertiary Discord notification bot.
+This file outlines the boundary between the public recruitment site, the Cloudflare backend, and the Discord notification bot.
 
-## Public frontend
+## Authentication
 
-The frontend should only call HTTPS API routes. It must never receive database credentials, Discord client secrets, or encryption keys intended for server-side use.
+The public site starts Discord OAuth through the backend. The Discord client secret stays on the server.
 
 Suggested routes:
 
@@ -12,11 +12,48 @@ Suggested routes:
 - `GET /auth/discord/callback`
 - `POST /auth/logout`
 - `GET /api/me`
+
+The backend should take the applicant's Discord user ID from the authenticated session. Do not trust a Discord user ID supplied by the browser as proof of identity.
+
+## Applicant routes
+
 - `GET /api/application`
 - `POST /api/application`
 - `PATCH /api/application`
 - `GET /api/interview`
 - `POST /api/interview/messages`
+
+The current application payload contains these fields where relevant:
+
+- `preferred_name`
+- `timezone`
+- `pronouns`
+- `age_group`
+- `referral`
+- `minor_portfolio`
+- `guardian_permission`
+- `experience`
+- `interests`
+- `critique`
+- `time_commitment`
+- `pokemon_projects`
+- `anything_else`
+- `roles`
+- `programming_kind`
+- `essentials_familiarity`
+- `programming_interest`
+- `programming_examples`
+- `programming_other`
+- `animation_examples`
+- `spriting_ability`
+- `sprite_portfolio`
+- `sprite_style`
+- `sprite_no_portfolio`
+- `music_portfolio`
+- `music_style`
+- `music_no_portfolio`
+
+`roles`, `programming_interest`, and `spriting_ability` can contain more than one value.
 
 ## Director routes
 
@@ -34,9 +71,7 @@ Suggested routes:
 
 ## Bot events
 
-The bot does not need application answers or interview contents just to send notifications.
-
-Suggested outbound events from the backend:
+The notification bot does not need application answers or interview contents.
 
 ### New application
 
@@ -49,7 +84,7 @@ Suggested outbound events from the backend:
 }
 ```
 
-### Applicant status notification
+### Applicant notification
 
 ```json
 {
@@ -63,4 +98,6 @@ The bot can translate the notification key into the approved Discord message tex
 
 ## Storage boundary
 
-The static GitHub Pages repository stores public frontend files only. Sensitive recruitment records belong in Cloudflare storage. The interview encryption design should be finalised before interview messages are stored in production.
+The GitHub Pages repository stores public frontend files only. Applicant records, application answers, status history, and private ticket data belong on the protected Cloudflare backend.
+
+Interview message storage and encryption should not be enabled until the Director/interviewee access model has been finalised and tested.

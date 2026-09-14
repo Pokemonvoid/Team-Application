@@ -1,6 +1,6 @@
 # Pokémon Void Recruitment Portal
 
-Static frontend for the Pokémon Void development-team recruitment portal.
+Frontend for the Pokémon Void development-team recruitment portal.
 
 ## Deploying to GitHub Pages
 
@@ -13,20 +13,18 @@ Static frontend for the Pokémon Void development-team recruitment portal.
 
 `index.html` must stay in the repository root.
 
-## Current state
+## Pages included
 
-The frontend includes:
-
-- public recruitment home page
+- recruitment home page
 - multi-step application form
 - multi-role question flow
-- applicant status sign-in page
+- applicant status page
 - applicant interview-ticket layout
 - Director queue layout
 - help and privacy pages
 - mobile layouts
 
-The live backend is intentionally not included here.
+The live backend is intentionally separate from this repository.
 
 ## Backend connection
 
@@ -51,11 +49,20 @@ The public repository must not contain:
 
 Those belong on the server-side Cloudflare environment.
 
-## Open roles in this build
+## Open roles
 
 - Programming
 - Move Animation
 - Spriting
 - Music
 
-Other roles are currently shown as closed.
+Other roles are currently closed.
+
+## Age brackets
+
+- Under 18
+- 18–24
+- 25–29
+- 30+
+
+Applicants of any age may apply. Applicants under 18 follow the guardian-permission, portfolio, and referral requirements.

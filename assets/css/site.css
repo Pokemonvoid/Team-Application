@@ -34,7 +34,11 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background: var(--ink);
+  background-color: var(--ink);
+  background-image:
+    linear-gradient(rgba(158, 112, 194, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(158, 112, 194, 0.035) 1px, transparent 1px);
+  background-size: 24px 24px;
   color: var(--text);
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 15px;
@@ -76,9 +80,10 @@ select:focus-visible {
 }
 
 .site-header {
-  border-bottom: 3px solid var(--line-bright);
-  background: #0d0912;
-  box-shadow: 0 4px 0 var(--shadow);
+  border-top: 4px solid #d84b59;
+  border-bottom: 4px solid #d9c8e8;
+  background: #100a17;
+  box-shadow: 0 5px 0 var(--shadow);
 }
 
 .header-inner {
@@ -99,36 +104,37 @@ select:focus-visible {
 }
 
 .void-emblem {
-  width: 48px;
-  height: 48px;
-  flex: 0 0 48px;
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
   position: relative;
-  border: 3px solid var(--void-pale);
+  overflow: hidden;
+  border: 4px solid #09080b;
   border-radius: 50%;
-  background: var(--panel-3);
-  box-shadow: 3px 3px 0 #3b2451;
+  background: #f7f4f8;
+  box-shadow: 0 0 0 2px #dbc9e8, 4px 4px 0 #39224b;
 }
 
 .void-emblem::before {
   content: "";
   position: absolute;
-  left: 5px;
-  right: 5px;
-  top: 20px;
-  height: 3px;
-  background: var(--void-pale);
+  inset: 0 0 50% 0;
+  background: #d84b59;
+  border-bottom: 5px solid #09080b;
 }
 
 .void-emblem::after {
   content: "";
   position: absolute;
-  width: 12px;
-  height: 12px;
-  left: 15px;
-  top: 14px;
-  border: 3px solid var(--void-pale);
+  width: 16px;
+  height: 16px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: 4px solid #09080b;
   border-radius: 50%;
-  background: var(--ink);
+  background: #f8f6fa;
+  box-shadow: inset 0 0 0 3px #cdb7dd;
 }
 
 .brand-copy {
@@ -147,7 +153,7 @@ select:focus-visible {
 .brand-title {
   display: block;
   color: #fff;
-  font: 900 clamp(20px, 3vw, 29px)/1 Arial, Helvetica, sans-serif;
+  font: 900 clamp(20px, 3vw, 29px)/1 "Trebuchet MS", Verdana, sans-serif;
   letter-spacing: -0.02em;
   text-shadow: 2px 2px 0 #4a2c63;
 }
@@ -205,9 +211,10 @@ select:focus-visible {
 }
 
 .portal-frame {
-  border: 2px solid var(--line);
+  border: 3px solid #d9c8e8;
+  outline: 3px solid #4f3268;
   background: var(--panel);
-  box-shadow: 7px 7px 0 var(--shadow);
+  box-shadow: 8px 8px 0 var(--shadow);
 }
 
 .portal-head {
@@ -216,8 +223,8 @@ select:focus-visible {
   gap: 20px;
   align-items: end;
   padding: 24px 26px 20px;
-  border-bottom: 2px solid var(--line);
-  background: #1b1226;
+  border-bottom: 3px solid #5a3a73;
+  background: #21142e;
 }
 
 .portal-eyebrow {
@@ -231,7 +238,7 @@ select:focus-visible {
 .portal-title {
   margin: 0;
   color: #fff;
-  font: 900 clamp(28px, 5vw, 48px)/1 Arial, Helvetica, sans-serif;
+  font: 900 clamp(28px, 5vw, 48px)/1 "Trebuchet MS", Verdana, sans-serif;
   letter-spacing: -0.035em;
   text-shadow: 3px 3px 0 #4d2e66;
 }
@@ -279,7 +286,7 @@ select:focus-visible {
 }
 
 .panel {
-  border: 1px solid var(--line);
+  border: 2px solid #5a3c6d;
   background: var(--ink-soft);
   box-shadow: 4px 4px 0 var(--shadow);
 }
@@ -291,11 +298,20 @@ select:focus-visible {
 .panel-title {
   margin: 0;
   padding: 11px 14px;
-  border-bottom: 1px solid var(--line);
-  background: var(--panel-2);
+  border-bottom: 2px solid #503661;
+  background: #251832;
   color: var(--void-pale);
   font: 800 14px/1.2 Arial, Helvetica, sans-serif;
   letter-spacing: 0.01em;
+}
+
+.panel-title::before {
+  content: "▶";
+  display: inline-block;
+  margin-right: 8px;
+  color: var(--yellow);
+  font-size: 9px;
+  vertical-align: 1px;
 }
 
 .panel-body {
@@ -324,15 +340,15 @@ select:focus-visible {
   gap: 18px;
   min-height: 44px;
   padding: 10px 13px 10px 15px;
-  border: 2px solid var(--line-bright);
-  border-radius: 2px;
-  background: #271837;
+  border: 2px solid #cdb7dd;
+  border-radius: 0;
+  background: #2a1839;
   color: #fff;
   text-decoration: none;
   font-size: 13px;
   font-weight: 800;
   cursor: pointer;
-  box-shadow: 4px 4px 0 #08050b;
+  box-shadow: 4px 4px 0 #08050b, inset 0 0 0 1px #55366e;
 }
 
 .game-button::after {
@@ -572,15 +588,16 @@ select:focus-visible {
 }
 
 .form-card {
-  border: 2px solid var(--line);
+  border: 3px solid #d2c0df;
+  outline: 3px solid #4f3268;
   background: #120d18;
-  box-shadow: 6px 6px 0 var(--shadow);
+  box-shadow: 7px 7px 0 var(--shadow);
 }
 
 .form-card-head {
   padding: 18px 20px 15px;
-  border-bottom: 2px solid var(--line);
-  background: var(--panel-2);
+  border-bottom: 3px solid #57396d;
+  background: #261833;
 }
 
 .form-card-head .section-number {
@@ -700,7 +717,7 @@ select:focus-visible {
   min-height: 96px;
   display: block;
   padding: 13px;
-  border: 2px solid #403049;
+  border: 2px solid #54405f;
   background: #100c15;
   cursor: pointer;
   box-shadow: 3px 3px 0 #070509;
@@ -721,8 +738,8 @@ select:focus-visible {
 
 .choice-card input:checked + .choice-face {
   border-color: var(--yellow);
-  background: #251b19;
-  box-shadow: 3px 3px 0 #6b5420;
+  background: #282019;
+  box-shadow: 4px 4px 0 #6b5420, inset 0 0 0 1px #f2cf63;
 }
 
 .choice-card input:focus-visible + .choice-face {
@@ -1225,6 +1242,119 @@ select:focus-visible {
   color: var(--muted);
   font-size: 12px;
 }
+
+
+.portal-menu {
+  margin-top: 20px;
+  border: 2px solid #5a3c6d;
+  background: #0a070e;
+}
+
+.portal-menu-item {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 20px;
+  gap: 12px;
+  align-items: center;
+  min-height: 72px;
+  padding: 11px 13px;
+  border-bottom: 1px solid #3e2a4b;
+  color: inherit;
+  text-decoration: none;
+}
+
+.portal-menu-item:last-child { border-bottom: 0; }
+.portal-menu-item:hover { background: #281936; color: #fff; }
+.portal-menu-number { color: var(--yellow); font: 800 12px/1 "Courier New", monospace; }
+.portal-menu-item strong { display: block; color: #fff; font: 800 14px/1.2 "Trebuchet MS", Verdana, sans-serif; }
+.portal-menu-item small { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; }
+.portal-menu-arrow { color: var(--yellow); font-size: 11px; }
+
+.application-desk .panel-body { padding-top: 18px; }
+
+.form-progress {
+  display: grid;
+  grid-template-columns: auto minmax(140px, 1fr);
+  gap: 14px;
+  align-items: center;
+  padding: 9px 14px;
+  border-bottom: 2px solid #4d345e;
+  background: #0b0810;
+  color: #d9cce1;
+  font: 700 11px/1.2 "Courier New", monospace;
+}
+
+.form-progress-track {
+  height: 8px;
+  border: 1px solid #574363;
+  background: #08060b;
+  overflow: hidden;
+}
+
+.form-progress-track > span {
+  display: block;
+  width: 25%;
+  height: 100%;
+  background: var(--yellow);
+  transition: width 160ms ease;
+}
+
+.account-note {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 11px;
+  align-items: center;
+  margin-bottom: 18px;
+  padding: 11px 12px;
+  border: 1px solid #51405d;
+  background: #0c0910;
+}
+
+.account-note strong, .account-note span { display: block; }
+.account-note strong { color: #fff; font-size: 12px; }
+.account-note span { margin-top: 2px; color: var(--muted); font-size: 11px; }
+
+.account-note-ball {
+  width: 28px;
+  height: 28px;
+  position: relative;
+  border: 3px solid #09080b;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, #d84b59 0 43%, #09080b 43% 57%, #f7f4f8 57% 100%);
+  box-shadow: 0 0 0 1px #d4c2df;
+}
+.account-note-ball::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: 3px solid #09080b;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.role-code {
+  display: inline-block;
+  min-width: 38px;
+  margin: 0 8px 0 0;
+  padding: 3px 5px;
+  border: 1px solid #705282;
+  background: #0c0910;
+  color: var(--yellow);
+  font: 800 10px/1 "Courier New", monospace;
+  text-align: center;
+}
+
+.choice-face > .role-code {
+  margin: 0 0 9px;
+}
+
+.role-question-head { display: flex; align-items: center; }
+.role-copy { margin-bottom: 14px; }
+.compact-area { min-height: 88px; }
+.confirm-line { margin-top: 14px; }
 
 .site-footer {
   padding: 20px 0 28px;
