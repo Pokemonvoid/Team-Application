@@ -1,21 +1,29 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Privacy · Pokémon Void Recruitment</title>
   <link rel="stylesheet" href="assets/css/site.css">
-  <script src="assets/js/config.js" defer></script>
-  <script src="assets/js/site.js" defer></script>
+  <script defer src="assets/js/config.js"></script><script defer src="assets/js/site.js"></script>
 </head>
 <body>
-  <header class="site-header"><div class="site-shell header-inner"><a class="brand" href="index.html"><span class="void-emblem" aria-hidden="true"></span><span class="brand-copy"><span class="brand-kicker">Development Team</span><span class="brand-title">Pokémon Void Recruitment</span></span></a><nav class="site-nav" aria-label="Main navigation"><a class="nav-link" href="index.html">Home</a><a class="nav-link" href="apply.html">Apply</a><a class="nav-link" href="status.html">My Application</a><a class="nav-link" href="help.html">Help</a></nav></div></header>
-  <main class="page"><div class="site-shell"><div class="page-heading"><h1>Privacy & Account Safety</h1><p>A plain-language summary of how the recruitment portal is intended to handle applicant information.</p></div>
-    <section class="panel"><h2 class="panel-title">Discord sign-in</h2><div class="panel-body"><p class="intro-copy" style="font-size:13px;">The production portal will use Discord OAuth. Your Discord password, 2FA code, passkey, or Discord session credentials are not collected by this website. Sign-in happens on Discord's own authorization page.</p></div></section>
-    <section class="panel"><h2 class="panel-title">Application data</h2><div class="panel-body"><ul class="info-list"><li>The public website repository contains frontend files only.</li><li>Application answers, applicant records, status history, and private ticket data belong on the protected Cloudflare backend.</li><li>Secrets, database credentials, authentication secrets, and encryption keys must never be committed to the public frontend repository.</li><li>Director/admin access must be checked by the backend on every protected request.</li></ul></div></section>
-    <section class="panel"><h2 class="panel-title">Interview privacy</h2><div class="panel-body"><p class="intro-copy" style="font-size:13px;">The final interview encryption design is being handled separately from the public frontend. The intended access model is Director and interviewee only. The live interview system should not be enabled until that model is agreed and tested.</p></div></section>
-  </div></main>
-  <footer class="site-footer"><div class="site-shell footer-inner"><span>Pokémon Void Recruitment · <span data-current-year></span></span><span class="footer-links"><a href="privacy.html">Privacy</a><a href="help.html">Help</a></span></div></footer>
-  <div class="toast" data-toast hidden role="status" aria-live="polite"></div>
+<a class="skip-link" href="#main">Skip to main content</a>
+<header class="site-header"><div class="header-inner"><a class="brand" href="index.html" aria-label="Pokémon Void Recruitment home"><span class="pokeball-mark" aria-hidden="true"><span class="ball-top"></span><span class="ball-band"><span class="ball-button"></span></span><span class="ball-bottom"></span></span><span class="brand-copy"><span class="brand-name">Pokémon Void</span><span class="brand-sub">Development Recruitment</span></span></a><button class="mobile-menu-button" type="button" data-menu-button aria-expanded="false" aria-label="Open navigation">Menu</button><nav class="site-nav" data-site-nav aria-label="Main navigation"><a href="index.html">Home</a><a href="apply.html">Apply</a><a href="status.html">My Application</a><a href="help.html">Help</a></nav></div></header>
+<main id="main" class="text-page">
+  <div class="page-heading"><p class="page-kicker">Recruitment Data</p><h1>Privacy</h1><p>This page describes the intended data boundaries for the recruitment portal. It should be reviewed again before live applications are enabled.</p></div>
+
+  <section class="text-section"><h2>Discord account security</h2><p>Discord authentication is handled through Discord OAuth. Pokémon Void does not need your Discord password, 2FA code, passkey, or Discord session credentials. The backend only keeps the account information required to identify your recruitment profile.</p></section>
+
+  <section class="text-section"><h2>Where application data belongs</h2><p>The public website files may be hosted on GitHub Pages, but application answers, recruitment records, interview contents, access tokens, secrets, and database credentials must not be stored in the public website repository.</p><p>Private recruitment data is intended to be handled by the Cloudflare backend and its database, with access controlled server-side.</p></section>
+
+  <section class="text-section"><h2>Who can review applications?</h2><p>The Director portal is intended for authorised recruitment Directors only. Opening the public <code>admin.html</code> address must never be enough to access data; every protected request must also be authorised by the backend.</p></section>
+
+  <section class="text-section"><h2>Interview confidentiality</h2><p>The interview ticket system is being designed separately from ordinary application storage because the Directors want stronger confidentiality for interview conversations. It will not be treated as complete until its access and encryption model has been reviewed and approved.</p></section>
+
+  <section class="text-section"><h2>Uploads and links</h2><p>Initial applications should prefer links for larger work samples, especially video. This reduces unnecessary storage of large personal files. Any future direct-upload feature should use private backend storage rather than the public site repository.</p></section>
+
+  <div class="button-row" style="margin-top:26px;"><a class="button ghost" href="index.html">Return home</a></div>
+</main>
+<footer class="site-footer"><div class="footer-inner"><span>Pokémon Void Development Recruitment · <span data-current-year></span></span><span class="footer-links"><a href="privacy.html">Privacy</a><a href="help.html">Help</a></span></div></footer>
 </body>
 </html>

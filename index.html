@@ -3,133 +3,110 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Pokémon Void development team recruitment portal.">
   <title>Pokémon Void Recruitment</title>
+  <meta name="description" content="Apply to join the Pokémon Void development team.">
   <link rel="stylesheet" href="assets/css/site.css">
-  <script src="assets/js/config.js" defer></script>
-  <script src="assets/js/site.js" defer></script>
+  <script defer src="assets/js/config.js"></script>
+  <script defer src="assets/js/site.js"></script>
 </head>
 <body>
-  <header class="site-header">
-    <div class="site-shell header-inner">
-      <a class="brand" href="index.html" aria-label="Pokémon Void Recruitment home">
-        <span class="void-emblem" aria-hidden="true"></span>
-        <span class="brand-copy">
-          <span class="brand-kicker">Development Team</span>
-          <span class="brand-title">Pokémon Void Recruitment</span>
-        </span>
-      </a>
-      <nav class="site-nav" aria-label="Main navigation">
-        <a class="nav-link" href="index.html" aria-current="page">Home</a>
-        <a class="nav-link" href="apply.html">Apply</a>
-        <a class="nav-link" href="status.html">My Application</a>
-        <a class="nav-link" href="help.html">Help</a>
-      </nav>
-    </div>
-  </header>
+<a class="skip-link" href="#main">Skip to main content</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html" aria-label="Pokémon Void Recruitment home">
+      <span class="pokeball-mark" aria-hidden="true"><span class="ball-top"></span><span class="ball-band"><span class="ball-button"></span></span><span class="ball-bottom"></span></span>
+      <span class="brand-copy"><span class="brand-name">Pokémon Void</span><span class="brand-sub">Development Recruitment</span></span>
+    </a>
+    <button class="mobile-menu-button" type="button" data-menu-button aria-expanded="false" aria-label="Open navigation">Menu</button>
+    <nav class="site-nav" data-site-nav aria-label="Main navigation">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="apply.html">Apply</a>
+      <a href="status.html">My Application</a>
+      <a href="help.html">Help</a>
+    </nav>
+  </div>
+</header>
 
-  <main class="page">
-    <div class="site-shell">
-      <div class="preview-notice">Recruitment portal setup is still in progress. Discord sign-in and live submissions are not enabled yet.</div>
+<main id="main">
+  <div class="page-heading">
+    <p class="page-kicker">Development Team Recruitment</p>
+    <h1>Applications</h1>
+    <p>Use this site to apply for an open Pokémon Void development role and follow your application through review.</p>
+  </div>
 
-      <section class="portal-frame">
-        <div class="portal-head">
-          <div>
-            <p class="portal-eyebrow">Pokémon Void · Developer Recruitment</p>
-            <h1 class="portal-title">Development Applications</h1>
-            <p class="portal-subtitle">Apply for an open role, follow your application, and continue the recruitment process from one place.</p>
-          </div>
-          <div class="status-plate" aria-label="Recruitment status">
-            <strong>Applications</strong>
-            <span>Open for selected roles</span>
-          </div>
-        </div>
+  <div data-site-message class="notice-strip info" hidden></div>
 
-        <div class="portal-body">
-          <div class="menu-grid">
-            <div>
-              <section class="panel application-desk">
-                <h2 class="panel-title">Application Desk</h2>
-                <div class="panel-body">
-                  <p class="intro-copy">Use your Discord account to create a recruitment profile. You can apply for more than one currently open role.</p>
+  <div class="home-layout">
+    <section class="recruit-board" aria-labelledby="start-title">
+      <div class="board-header">
+        <h2 id="start-title">Recruitment Desk</h2>
+        <span class="board-stamp">Applications open</span>
+      </div>
+      <div class="board-body">
+        <p class="intro-copy"><strong>Applying should be straightforward.</strong> Sign in with Discord, answer the questions for the role or roles you want, then submit when you are happy with everything.</p>
 
-                  <div class="portal-menu" aria-label="Recruitment menu">
-                    <a class="portal-menu-item" href="#" data-discord-login data-return-to="apply.html">
-                      <span class="portal-menu-number">01</span>
-                      <span><strong>Start an application</strong><small>Sign in with Discord and begin.</small></span>
-                      <span class="portal-menu-arrow" aria-hidden="true">▶</span>
-                    </a>
-                    <a class="portal-menu-item" href="apply.html">
-                      <span class="portal-menu-number">02</span>
-                      <span><strong>View application questions</strong><small>See the current form before signing in.</small></span>
-                      <span class="portal-menu-arrow" aria-hidden="true">▶</span>
-                    </a>
-                    <a class="portal-menu-item" href="status.html">
-                      <span class="portal-menu-number">03</span>
-                      <span><strong>My application</strong><small>Check your current status or interview ticket.</small></span>
-                      <span class="portal-menu-arrow" aria-hidden="true">▶</span>
-                    </a>
-                  </div>
+        <ul class="action-menu" aria-label="Recruitment actions">
+          <li>
+            <a href="apply.html">
+              <span class="menu-arrow" aria-hidden="true">▶</span>
+              <span><span class="menu-title">Start an application</span><span class="menu-copy">Choose one or more open roles and complete the form.</span></span>
+              <span class="menu-key">START</span>
+            </a>
+          </li>
+          <li>
+            <a href="status.html">
+              <span class="menu-arrow" aria-hidden="true">▶</span>
+              <span><span class="menu-title">View my application</span><span class="menu-copy">Check your current status and any updates from the Directors.</span></span>
+              <span class="menu-key">STATUS</span>
+            </a>
+          </li>
+          <li>
+            <a href="help.html">
+              <span class="menu-arrow" aria-hidden="true">▶</span>
+              <span><span class="menu-title">Application help</span><span class="menu-copy">Read how the process works before you begin.</span></span>
+              <span class="menu-key">HELP</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
 
-                  <div class="privacy-strip">
-                    <span class="privacy-mark" aria-hidden="true">i</span>
-                    <div>Discord sign-in happens on Discord's own authorization page. This site never asks for your Discord password or 2FA code.</div>
-                  </div>
-                </div>
-              </section>
+    <aside class="menu-panel" aria-labelledby="roles-title">
+      <div class="panel-header"><h2 id="roles-title">Open Roles</h2></div>
+      <ul class="role-list">
+        <li><span class="role-number">01</span><span><span class="role-name">Programmer</span><span class="role-desc">Essentials, RPG Maker XP, plugins, events, UI and related systems.</span></span><span class="role-state">Open</span></li>
+        <li><span class="role-number">02</span><span><span class="role-name">Move Animator</span><span class="role-desc">Battle move animation work and related effects.</span></span><span class="role-state">Open</span></li>
+        <li><span class="role-number">03</span><span><span class="role-name">Spriter</span><span class="role-desc">Battle sprites, trainers, overworlds, icons, palettes and tilesets.</span></span><span class="role-state">Open</span></li>
+        <li><span class="role-number">04</span><span><span class="role-name">Music</span><span class="role-desc">Composition and music suited to Pokémon Void.</span></span><span class="role-state">Open</span></li>
+        <li><span class="role-number">—</span><span><span class="role-name">Other roles</span><span class="role-desc">Applications for other departments are currently paused.</span></span><span class="role-state closed">Closed</span></li>
+      </ul>
+    </aside>
+  </div>
 
-              <section class="panel">
-                <h2 class="panel-title">What happens after you apply</h2>
-                <div class="panel-body">
-                  <ol class="step-list">
-                    <li><div><strong>Submit your application</strong><p>Choose one or more open roles and complete the questions relevant to you.</p></div></li>
-                    <li><div><strong>Director review</strong><p>Your application enters the private Director queue for review.</p></div></li>
-                    <li><div><strong>Application update</strong><p>Important updates can be sent to your Discord account so you do not have to keep refreshing the site.</p></div></li>
-                    <li><div><strong>Interview or onboarding</strong><p>If you progress, the Directors will continue the process with you directly. Some roles may move to Discord for a live interview.</p></div></li>
-                  </ol>
-                </div>
-              </section>
-            </div>
+  <div class="section-rule"><h2>What happens after you apply</h2></div>
+  <ol class="process-list">
+    <li><div class="process-copy"><strong>Submit your application</strong><span>Sign in with Discord and complete the questions for every role you select.</span></div></li>
+    <li><div class="process-copy"><strong>Director review</strong><span>Your application enters the private recruitment queue. Updates can be sent to you through Discord.</span></div></li>
+    <li><div class="process-copy"><strong>Application ticket</strong><span>If the Directors want to continue, questions and replies can be handled through your private recruitment ticket.</span></div></li>
+    <li><div class="process-copy"><strong>Live follow-up if needed</strong><span>Some applicants may be invited to a secluded area of the development server for a live interview or additional questions.</span></div></li>
+    <li><div class="process-copy"><strong>Onboarding</strong><span>Successful applicants are welcomed into the development team and introduced to the people they will work with.</span></div></li>
+  </ol>
 
-            <aside>
-              <section class="panel">
-                <h2 class="panel-title">Open roles</h2>
-                <div class="panel-body">
-                  <div class="role-board">
-                    <div class="role-tile" data-role="programming"><strong>Programming</strong><span>Pokémon Essentials, RPG Maker XP, events, plugins, UI and game systems.</span></div>
-                    <div class="role-tile" data-role="move-animation"><strong>Move Animation</strong><span>Move animation work reviewed by the relevant Director.</span></div>
-                    <div class="role-tile" data-role="spriting"><strong>Spriting</strong><span>Pokémon sprites, trainers, overworlds, icons, palettes and tilesets.</span></div>
-                    <div class="role-tile" data-role="music"><strong>Music</strong><span>Composition and sound work suited to Pokémon Void.</span></div>
-                  </div>
-                  <div class="closed-note">Other development roles are temporarily closed.</div>
-                </div>
-              </section>
+  <div class="section-rule"><h2>Before you start</h2></div>
+  <div class="notice-strip">
+    <p><strong>Any age can apply.</strong> Be honest about your experience and availability. You may apply for more than one open role in the same application.</p>
+  </div>
+  <div class="button-row">
+    <a class="button primary" href="apply.html">Begin application</a>
+    <a class="button ghost" href="privacy.html">How your information is handled</a>
+  </div>
+</main>
 
-              <section class="panel">
-                <h2 class="panel-title">Before you apply</h2>
-                <div class="panel-body">
-                  <ul class="info-list">
-                    <li>Applicants of any age may apply.</li>
-                    <li>Applicants under 18 require guardian permission, a portfolio, and a referral.</li>
-                    <li>You may apply for more than one open role.</li>
-                    <li>Your Discord account will identify your recruitment profile, so you will not need a separate username and password.</li>
-                    <li>Have examples of your work ready where the role asks for them.</li>
-                  </ul>
-                </div>
-              </section>
-            </aside>
-          </div>
-        </div>
-      </section>
-    </div>
-  </main>
-
-  <footer class="site-footer">
-    <div class="site-shell footer-inner">
-      <span>Pokémon Void Recruitment · <span data-current-year></span></span>
-      <span class="footer-links"><a href="privacy.html">Privacy</a><a href="help.html">Help</a></span>
-    </div>
-  </footer>
-  <div class="toast" data-toast hidden role="status" aria-live="polite"></div>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span>Pokémon Void Development Recruitment · <span data-current-year></span></span>
+    <span class="footer-links"><a href="privacy.html">Privacy</a><a href="help.html">Help</a></span>
+  </div>
+</footer>
 </body>
 </html>

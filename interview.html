@@ -1,53 +1,26 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Interview Ticket · Pokémon Void Recruitment</title>
   <link rel="stylesheet" href="assets/css/site.css">
-  <script src="assets/js/config.js" defer></script>
-  <script src="assets/js/site.js" defer></script>
+  <script defer src="assets/js/config.js"></script><script defer src="assets/js/site.js"></script><script defer src="assets/js/portal.js"></script>
 </head>
-<body>
-  <header class="site-header">
-    <div class="site-shell header-inner">
-      <a class="brand" href="index.html"><span class="void-emblem" aria-hidden="true"></span><span class="brand-copy"><span class="brand-kicker">Development Team</span><span class="brand-title">Pokémon Void Recruitment</span></span></a>
-      <nav class="site-nav" aria-label="Main navigation"><a class="nav-link" href="index.html">Home</a><a class="nav-link" href="apply.html">Apply</a><a class="nav-link" href="status.html">My Application</a><a class="nav-link" href="help.html">Help</a></nav>
-    </div>
-  </header>
-
-  <main class="page">
-    <div class="site-shell">
-      <div class="page-heading"><h1>Private Interview Ticket</h1><p>This is the applicant-facing ticket layout. The live version will only appear for an applicant who has been invited to interview.</p></div>
-      <div class="preview-notice">Preview only — interview content and encryption are not connected in this frontend build.</div>
-
-      <section class="ticket-shell">
-        <aside class="ticket-sidebar">
-          <h2>Interview details</h2>
-          <dl class="ticket-meta">
-            <div><dt>Ticket</dt><dd>PV-INTERVIEW</dd></div>
-            <div><dt>Status</dt><dd>Awaiting response</dd></div>
-            <div><dt>Applicant view</dt><dd>Director identities hidden</dd></div>
-            <div><dt>Reply style</dt><dd>Asynchronous ticket</dd></div>
-          </dl>
-        </aside>
-        <div class="ticket-main">
-          <div class="ticket-head"><strong>Pokémon Void Recruitment</strong><span>Private conversation between the applicant and authorised Directors.</span></div>
-          <div class="message-list">
-            <article class="ticket-message"><span class="message-author">Pokémon Void Recruitment</span><p>Your application has progressed to the interview stage. The Directors may ask follow-up questions here before a final decision is made.</p><span class="message-time">Example message</span></article>
-            <article class="ticket-message is-applicant"><span class="message-author">You</span><p>Your replies will appear here once the live ticket system is connected.</p><span class="message-time">Example reply</span></article>
-          </div>
-          <div class="ticket-compose">
-            <label class="field-label" for="ticket-reply">Reply</label>
-            <textarea class="text-area" id="ticket-reply" placeholder="Write your response…" disabled></textarea>
-            <div class="action-row"><button class="game-button is-disabled" type="button" disabled>Send reply</button></div>
-          </div>
-        </div>
-      </section>
-    </div>
-  </main>
-
-  <footer class="site-footer"><div class="site-shell footer-inner"><span>Pokémon Void Recruitment · <span data-current-year></span></span><span class="footer-links"><a href="privacy.html">Privacy</a><a href="help.html">Help</a></span></div></footer>
-  <div class="toast" data-toast hidden role="status" aria-live="polite"></div>
+<body data-portal-page="interview">
+<a class="skip-link" href="#main">Skip to main content</a>
+<header class="site-header"><div class="header-inner"><a class="brand" href="index.html" aria-label="Pokémon Void Recruitment home"><span class="pokeball-mark" aria-hidden="true"><span class="ball-top"></span><span class="ball-band"><span class="ball-button"></span></span><span class="ball-bottom"></span></span><span class="brand-copy"><span class="brand-name">Pokémon Void</span><span class="brand-sub">Development Recruitment</span></span></a><button class="mobile-menu-button" type="button" data-menu-button aria-expanded="false" aria-label="Open navigation">Menu</button><nav class="site-nav" data-site-nav aria-label="Main navigation"><a href="index.html">Home</a><a href="apply.html">Apply</a><a href="status.html" aria-current="page">My Application</a><a href="help.html">Help</a></nav></div></header>
+<main id="main">
+  <div class="page-heading"><p class="page-kicker">Private Recruitment Ticket</p><h1>Interview</h1><p>If your application reaches the interview stage, your recruitment conversation will appear here.</p></div>
+  <div class="notice-strip"><p><strong>Privacy design in progress.</strong> The interview messaging system will not go live until the Directors have approved exactly how interview contents are protected and who can read them.</p></div>
+  <div id="interview-message" hidden></div>
+  <section id="interview-signin" class="file-panel" hidden><div class="panel-header"><h2>Interview ticket</h2></div><div class="board-body"><h2>Sign in required</h2><p style="margin-top:8px;color:#b8aebf;">Sign in with your Discord account to open your recruitment ticket.</p><a class="button primary" href="#" data-discord-login>Sign in with Discord</a></div></section>
+  <section id="interview-empty" class="file-panel" hidden><div class="panel-header"><h2>Interview ticket</h2></div><div class="board-body"><h2>No interview ticket</h2><p style="margin-top:8px;color:#b8aebf;">There is no interview ticket attached to your application at the moment. This is normal while an application is still being reviewed.</p><a class="button ghost" href="status.html">Return to application status</a></div></section>
+  <section id="interview-panel" class="file-panel" hidden>
+    <div class="panel-header"><h2>Recruitment ticket <span data-ticket-id></span></h2><span class="status-badge interview" data-ticket-status>Interview</span></div>
+    <div class="ticket-log" data-ticket-log></div>
+    <div class="ticket-compose"><label for="ticket-reply">Reply</label><textarea id="ticket-reply" disabled placeholder="Replying will be enabled after the interview privacy system is approved and connected."></textarea><div class="button-row" style="margin-top:10px;"><button class="button primary" type="button" disabled>Send reply</button></div></div>
+  </section>
+</main>
+<footer class="site-footer"><div class="footer-inner"><span>Pokémon Void Development Recruitment · <span data-current-year></span></span><span class="footer-links"><a href="privacy.html">Privacy</a><a href="help.html">Help</a></span></div></footer>
 </body>
 </html>

@@ -2,59 +2,121 @@
   "use strict";
 
   var config = window.VOID_RECRUITMENT || {};
-  var toast = document.querySelector("[data-toast]");
-  var toastTimer = null;
+  var apiBase = (config.apiBaseUrl || "").replace(/\/$/, "");
 
-  function showToast(message) {
-    if (!toast) {
-      window.alert(message);
-      return;
-    }
-
-    toast.textContent = message;
-    toast.hidden = false;
-    window.clearTimeout(toastTimer);
-    toastTimer = window.setTimeout(function () {
-      toast.hidden = true;
-    }, 4200);
+  function qs(selector, scope) {
+    return (scope || document).querySelector(selector);
   }
 
-  function getApiBase() {
-    return String(config.apiBaseUrl || "").replace(/\/$/, "");
+  function qsa(selector, scope) {
+    return Array.prototype.slice.call((scope || document).querySelectorAll(selector));
   }
 
-  document.querySelectorAll("[data-discord-login]").forEach(function (button) {
-    button.addEventListener("click", function (event) {
-      event.preventDefault();
-      var apiBase = getApiBase();
+  function setYear() {
+    qsa("[data-current-year]").forEach(function (node) {
+      node.textContent = new Date().getFullYear();
+    });
+  }
 
+  function wireMobileMenu() {
+    var button = qs("[data-menu-button]");
+    var nav = qs("[data-site-nav]");
+    if (!button || !nav) return;
+
+    button.addEventListener("click", function () {
+      var open = nav.classList.toggle("open");
+      button.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  }
+
+  function loginUrl(returnTo) {
+    if (!apiBase) return "#backend-not-connected";
+    var path = config.discordLoginPath || "/auth/discord";
+    return apiBase + path + "?returnTo=" + encodeURIComponent(returnTo || window.location.href);
+  }
+
+  function wireDiscordLinks() {
+    qsa("[data-discord-login]").forEach(function (link) {
+      link.setAttribute("href", loginUrl(link.getAttribute("data-return-to") || window.location.href));
       if (!apiBase) {
-        showToast("Discord sign-in will be enabled when the recruitment backend is connected.");
+        link.addEventListener("click", function (event) {
+          event.preventDefault();
+          showInlineMessage("Discord sign-in will become available when the Cloudflare backend is connected.", "info");
+        });
+      }
+    });
+  }
+
+  function showInlineMessage(message, type) {
+    var region = qs("[data-site-message]");
+    if (!region) return;
+    region.className = "notice-strip " + (type || "info");
+    region.textContent = message;
+    region.hidden = false;
+    region.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function updateAccountUi(session) {
+    var signedIn = Boolean(session && session.user);
+
+    qsa("[data-account-state]").forEach(function (node) {
+      if (!signedIn) {
+        node.textContent = apiBase ? "Not signed in" : "Discord connection pending";
         return;
       }
-
-      var returnTo = button.getAttribute("data-return-to") || window.location.pathname;
-      var loginPath = config.discordLoginPath || "/auth/discord";
-      window.location.href = apiBase + loginPath + "?returnTo=" + encodeURIComponent(returnTo);
+      var name = session.user.globalName || session.user.username || "Discord user";
+      node.textContent = "Signed in as " + name;
     });
-  });
 
-  document.querySelectorAll("[data-backend-action]").forEach(function (button) {
-    button.addEventListener("click", function (event) {
-      if (!getApiBase()) {
-        event.preventDefault();
-        showToast("This action will become available when the Cloudflare backend is connected.");
+    qsa("[data-account-name]").forEach(function (node) {
+      node.textContent = signedIn
+        ? (session.user.globalName || session.user.username || "Discord user")
+        : "—";
+    });
+
+    qsa("[data-signed-out-only]").forEach(function (node) {
+      node.hidden = signedIn;
+    });
+    qsa("[data-signed-in-only]").forEach(function (node) {
+      node.hidden = !signedIn;
+    });
+  }
+
+  async function loadSession() {
+    if (!apiBase) {
+      updateAccountUi(null);
+      return null;
+    }
+
+    try {
+      var response = await fetch(apiBase + "/api/session", {
+        credentials: "include",
+        headers: { "Accept": "application/json" }
+      });
+      if (!response.ok) {
+        updateAccountUi(null);
+        return null;
       }
-    });
-  });
-
-  var year = document.querySelector("[data-current-year]");
-  if (year) {
-    year.textContent = String(new Date().getFullYear());
+      var session = await response.json();
+      updateAccountUi(session);
+      return session;
+    } catch (error) {
+      updateAccountUi(null);
+      return null;
+    }
   }
 
   window.VoidRecruitment = {
-    showToast: showToast,
-    getApiBase: getApiBase
+    apiBase: apiBase,
+    loginUrl: loginUrl,
+    loadSession: loadSession,
+    showInlineMessage: showInlineMessage,
+    qs: qs,
+    qsa: qsa
   };
-})();
+
+  setYear();
+  wireMobileMenu();
+  wireDiscordLinks();
+  loadSession();
+}());

@@ -1,68 +1,59 @@
 # Pokémon Void Recruitment Portal
 
-Frontend for the Pokémon Void development-team recruitment portal.
+Frontend repository for the Pokémon Void development recruitment portal.
 
-## Deploying to GitHub Pages
+## What this repository contains
 
-1. Copy the contents of this folder into the root of the GitHub repository.
-2. Commit and push the files.
-3. In the repository, open **Settings → Pages**.
-4. Choose **Deploy from a branch**.
-5. Select `main` and `/(root)`.
-6. Save and wait for the Pages deployment to finish.
+- Public recruitment home page
+- Multi-step application form
+- Applicant status page
+- Interview ticket interface shell
+- Director portal interface shell
+- Help and privacy pages
+- Frontend integration points for Discord OAuth and the Cloudflare backend
 
-`index.html` must stay in the repository root.
+## Hosting boundary
 
-## Pages included
+This repository is suitable for static hosting such as GitHub Pages. It must contain public frontend code only.
 
-- recruitment home page
-- multi-step application form
-- multi-role question flow
-- applicant status page
-- applicant interview-ticket layout
-- Director queue layout
-- help and privacy pages
-- mobile layouts
+Do **not** commit:
 
-The live backend is intentionally separate from this repository.
+- Discord client secrets
+- Cloudflare API tokens
+- database credentials
+- applicant records
+- interview contents
+- private uploads
+- encryption keys
+- production session data
 
-## Backend connection
+Private recruitment data belongs on the backend.
 
-Edit `assets/js/config.js` when the Cloudflare Worker has a production URL:
+## Current backend expectation
+
+The frontend expects a Cloudflare Worker API and D1 database. Set the public API origin in:
+
+`assets/js/config.js`
+
+Example:
 
 ```js
 window.VOID_RECRUITMENT = {
-  apiBaseUrl: "https://your-worker.example.workers.dev",
+  apiBaseUrl: "https://recruitment-api.example.workers.dev",
   discordLoginPath: "/auth/discord"
 };
 ```
 
-The public repository must not contain:
+The API contract is documented in `API_CONTRACT.md`.
 
-- Discord client secrets
-- Cloudflare API secrets
-- database credentials
-- applicant records
-- interview contents
-- encryption keys
-- private access tokens
+## GitHub Pages
 
-Those belong on the server-side Cloudflare environment.
+Keep `index.html` at the repository root and publish the `main` branch from `/ (root)`.
 
-## Open roles
+All internal site links are relative, so the portal works from a GitHub Pages project path such as:
 
-- Programming
-- Move Animation
-- Spriting
-- Music
+`https://username.github.io/repository-name/`
 
-Other roles are currently closed.
+## Interview tickets
 
-## Age brackets
-
-- Under 18
-- 18–24
-- 25–29
-- 30+
-
-Applicants of any age may apply. Applicants under 18 follow the guardian-permission, portfolio, and referral requirements.
+The interview interface is intentionally not wired for sending messages yet. The confidentiality and encryption model should be approved by the Directors before that feature is enabled.

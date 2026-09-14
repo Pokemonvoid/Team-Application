@@ -1,61 +1,26 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
   <title>Director Portal · Pokémon Void Recruitment</title>
   <link rel="stylesheet" href="assets/css/site.css">
-  <script src="assets/js/config.js" defer></script>
-  <script src="assets/js/site.js" defer></script>
+  <script defer src="assets/js/config.js"></script><script defer src="assets/js/site.js"></script><script defer src="assets/js/portal.js"></script>
 </head>
-<body>
-  <header class="site-header">
-    <div class="site-shell header-inner">
-      <a class="brand" href="index.html"><span class="void-emblem" aria-hidden="true"></span><span class="brand-copy"><span class="brand-kicker">Director Access</span><span class="brand-title">Pokémon Void Recruitment</span></span></a>
-      <nav class="site-nav" aria-label="Main navigation"><a class="nav-link" href="index.html">Public portal</a><a class="nav-link" href="admin.html" aria-current="page">Director portal</a></nav>
-    </div>
-  </header>
-
-  <main class="page">
-    <div class="site-shell">
-      <div class="preview-notice">Director interface preview — production access must be enforced by the backend. Hiding this URL is not security.</div>
-      <section class="admin-shell">
-        <aside class="admin-side">
-          <div class="admin-side-head"><strong>Recruitment queue</strong><span>Sample interface</span></div>
-          <a class="admin-nav-link is-active" href="#"><span>New</span><span class="count-box">12</span></a>
-          <a class="admin-nav-link" href="#"><span>Flagged</span><span class="count-box">3</span></a>
-          <a class="admin-nav-link" href="#"><span>In review</span><span class="count-box">6</span></a>
-          <a class="admin-nav-link" href="#"><span>Interview</span><span class="count-box">4</span></a>
-          <a class="admin-nav-link" href="#"><span>On hold</span><span class="count-box">2</span></a>
-          <a class="admin-nav-link" href="#"><span>Archive</span><span class="count-box">—</span></a>
-        </aside>
-
-        <div class="admin-main">
-          <div class="admin-topbar"><div><h1>New applications</h1></div><a class="game-button compact" href="#" data-backend-action>Refresh</a></div>
-          <div class="admin-content">
-            <div class="queue-toolbar">
-              <span class="tag">Sample data</span>
-              <span class="tag">Director-only in production</span>
-            </div>
-            <div class="queue-table-wrap">
-              <table class="queue-table">
-                <thead><tr><th>Application</th><th>Roles</th><th>Status</th><th>Submitted</th><th>Assigned</th><th></th></tr></thead>
-                <tbody>
-                  <tr><td class="queue-id">PV-1042</td><td>Spriting</td><td><span class="tag">New</span></td><td>Today</td><td>Unclaimed</td><td><a class="game-button compact" href="#" data-backend-action>Open</a></td></tr>
-                  <tr><td class="queue-id">PV-1041</td><td>Programming</td><td><span class="tag flagged">Flagged</span></td><td>Today</td><td>Unclaimed</td><td><a class="game-button compact" href="#" data-backend-action>Open</a></td></tr>
-                  <tr><td class="queue-id">PV-1040</td><td>Music</td><td><span class="tag">New</span></td><td>Yesterday</td><td>Unclaimed</td><td><a class="game-button compact" href="#" data-backend-action>Open</a></td></tr>
-                  <tr><td class="queue-id">PV-1039</td><td>Move Animation</td><td><span class="tag interview">Interview</span></td><td>Yesterday</td><td>Director</td><td><a class="game-button compact" href="#" data-backend-action>Open</a></td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  </main>
-
-  <footer class="site-footer"><div class="site-shell footer-inner"><span>Pokémon Void Recruitment · Director Portal</span><span>Production access must be server-side.</span></div></footer>
-  <div class="toast" data-toast hidden role="status" aria-live="polite"></div>
+<body data-portal-page="admin">
+<a class="skip-link" href="#main">Skip to main content</a>
+<header class="site-header"><div class="header-inner"><a class="brand" href="index.html" aria-label="Pokémon Void Recruitment home"><span class="pokeball-mark" aria-hidden="true"><span class="ball-top"></span><span class="ball-band"><span class="ball-button"></span></span><span class="ball-bottom"></span></span><span class="brand-copy"><span class="brand-name">Pokémon Void</span><span class="brand-sub">Director Recruitment Portal</span></span></a></div></header>
+<main id="main">
+  <div class="page-heading"><p class="page-kicker">Restricted</p><h1>Director Portal</h1><p>Application review is restricted to authorised Director accounts. Permission must be checked by the backend on every protected request.</p></div>
+  <div id="admin-message" hidden></div>
+  <section id="admin-locked" class="file-panel" hidden><div class="panel-header"><h2>Access required</h2></div><div class="board-body"><h2>Director access only</h2><p style="margin-top:8px;color:#b8aebf;">Sign in with an authorised Discord account. Being able to open this page does not grant access to recruitment data.</p><a class="button primary" href="#" data-discord-login>Sign in with Discord</a></div></section>
+  <section id="admin-shell" class="admin-shell" hidden>
+    <div class="panel-header"><h2>Application Queue</h2><span class="board-stamp">Director only</span></div>
+    <div class="admin-toolbar" aria-label="Filter applications"><button class="filter-button" type="button" data-queue-filter="all" aria-pressed="true">All</button><button class="filter-button" type="button" data-queue-filter="submitted" aria-pressed="false">New</button><button class="filter-button" type="button" data-queue-filter="flagged" aria-pressed="false">Flagged</button><button class="filter-button" type="button" data-queue-filter="in-review" aria-pressed="false">In review</button><button class="filter-button" type="button" data-queue-filter="interview" aria-pressed="false">Interview</button><button class="filter-button" type="button" data-queue-filter="on-hold" aria-pressed="false">On hold</button></div>
+    <table class="queue-table"><thead><tr><th>Applicant</th><th>Role(s)</th><th>Status</th><th>Submitted</th><th>Handler</th></tr></thead><tbody data-queue-body></tbody></table>
+    <div class="queue-empty" data-queue-empty>No applications in this queue.</div>
+  </section>
+</main>
+<footer class="site-footer"><div class="footer-inner"><span>Pokémon Void Director Recruitment Portal</span><span class="footer-links"><a href="index.html">Public site</a></span></div></footer>
 </body>
 </html>

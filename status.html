@@ -1,46 +1,36 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>My Application · Pokémon Void Recruitment</title>
   <link rel="stylesheet" href="assets/css/site.css">
-  <script src="assets/js/config.js" defer></script>
-  <script src="assets/js/site.js" defer></script>
+  <script defer src="assets/js/config.js"></script><script defer src="assets/js/site.js"></script><script defer src="assets/js/portal.js"></script>
 </head>
-<body>
-  <header class="site-header">
-    <div class="site-shell header-inner">
-      <a class="brand" href="index.html"><span class="void-emblem" aria-hidden="true"></span><span class="brand-copy"><span class="brand-kicker">Development Team</span><span class="brand-title">Pokémon Void Recruitment</span></span></a>
-      <nav class="site-nav" aria-label="Main navigation"><a class="nav-link" href="index.html">Home</a><a class="nav-link" href="apply.html">Apply</a><a class="nav-link" href="status.html" aria-current="page">My Application</a><a class="nav-link" href="help.html">Help</a></nav>
+<body data-portal-page="status">
+<a class="skip-link" href="#main">Skip to main content</a>
+<header class="site-header"><div class="header-inner"><a class="brand" href="index.html" aria-label="Pokémon Void Recruitment home"><span class="pokeball-mark" aria-hidden="true"><span class="ball-top"></span><span class="ball-band"><span class="ball-button"></span></span><span class="ball-bottom"></span></span><span class="brand-copy"><span class="brand-name">Pokémon Void</span><span class="brand-sub">Development Recruitment</span></span></a><button class="mobile-menu-button" type="button" data-menu-button aria-expanded="false" aria-label="Open navigation">Menu</button><nav class="site-nav" data-site-nav aria-label="Main navigation"><a href="index.html">Home</a><a href="apply.html">Apply</a><a href="status.html" aria-current="page">My Application</a><a href="help.html">Help</a></nav></div></header>
+<main id="main">
+  <div class="page-heading"><p class="page-kicker">Applicant File</p><h1>My Application</h1><p>Sign in with the same Discord account you used to apply. Only your own application is shown here.</p></div>
+  <div class="account-strip"><div><strong>Discord account</strong><br><small>Your application is tied to your Discord user ID.</small></div><div class="account-state" data-account-state>Checking connection…</div></div>
+  <div id="status-message" hidden></div>
+
+  <section id="status-empty" class="file-panel">
+    <div class="panel-header"><h2>Application record</h2></div>
+    <div class="board-body">
+      <h2>Sign in to view your application</h2>
+      <p style="margin-top:8px;color:#b8aebf;">If you have already applied, sign in with Discord to see its current status. If you have not applied yet, you can begin a new application.</p>
+      <div class="button-row"><a class="button primary" href="#" data-discord-login>Sign in with Discord</a><a class="button ghost" href="apply.html">Start an application</a></div>
     </div>
-  </header>
+  </section>
 
-  <main class="page">
-    <div class="site-shell">
-      <div class="page-heading"><h1>My Application</h1><p>Sign in with the same Discord account you used to apply.</p></div>
-      <section class="login-gate">
-        <span class="void-emblem" aria-hidden="true"></span>
-        <h2>Sign in to view your application</h2>
-        <p>Your recruitment profile is tied to your Discord account. Once the backend is connected, this page will show your current application status and any interview ticket available to you.</p>
-        <div class="action-row"><a class="game-button" href="#" data-discord-login data-return-to="status.html">Continue with Discord</a></div>
-      </section>
-
-      <section class="panel" style="margin-top:24px;">
-        <h2 class="panel-title">What the status page will show</h2>
-        <div class="panel-body">
-          <ol class="status-track">
-            <li class="is-current"><strong>Submitted</strong><span>Application received.</span></li>
-            <li><strong>Under review</strong><span>Directors are reviewing it.</span></li>
-            <li><strong>Interview</strong><span>Further questions if you progress.</span></li>
-            <li><strong>Decision</strong><span>Next steps are provided directly.</span></li>
-          </ol>
-        </div>
-      </section>
+  <section id="status-panel" class="file-panel" hidden>
+    <div class="panel-header"><h2>Application record</h2><span class="status-badge" data-status-badge>Submitted</span></div>
+    <div class="file-grid">
+      <aside class="file-sidebar"><div class="file-label">Application ID</div><div class="file-value" data-status-id>—</div><div class="file-label" style="margin-top:18px;">Role(s)</div><div class="file-value" data-status-roles>—</div><div class="file-label" style="margin-top:18px;">Last updated</div><div class="file-value" data-status-updated>—</div></aside>
+      <div class="file-main"><h3 style="margin-bottom:16px;">Progress</h3><ol class="timeline" data-status-timeline></ol><div class="button-row"><a class="button ghost" href="interview.html">Open interview ticket</a></div></div>
     </div>
-  </main>
-
-  <footer class="site-footer"><div class="site-shell footer-inner"><span>Pokémon Void Recruitment · <span data-current-year></span></span><span class="footer-links"><a href="privacy.html">Privacy</a><a href="help.html">Help</a></span></div></footer>
-  <div class="toast" data-toast hidden role="status" aria-live="polite"></div>
+  </section>
+</main>
+<footer class="site-footer"><div class="footer-inner"><span>Pokémon Void Development Recruitment · <span data-current-year></span></span><span class="footer-links"><a href="privacy.html">Privacy</a><a href="help.html">Help</a></span></div></footer>
 </body>
 </html>
