@@ -1,76 +1,61 @@
-# Pokémon Void Recruitment Portal — Frontend Prototype
+# Pokémon Void Recruitment Portal
 
-Static frontend prototype for the Pokémon Void development-team recruitment website.
+Static frontend for the Pokémon Void development-team recruitment portal.
 
-## Current pages
+## Deploying to GitHub Pages
 
-- `index.html` — public recruitment landing page
-- `apply.html` — four-stage application UI with Discord OAuth integration point
-- `status.html` — applicant profile/status shell
-- `interview.html` — applicant-facing asynchronous encrypted-ticket UI shell
-- `admin.html` — Director queue/admin UI prototype using fake records only
-- `help.html` — applicant FAQ
-- `privacy.html` — draft technical privacy page
-- `API_CONTRACT.md` — backend + Dark bot hand-off contract
-- `assets/css/site.css` — shared Void-style UI
-- `assets/js/site.js` — frontend-only interactions and preview behaviour
+1. Copy the contents of this folder into the root of the GitHub repository.
+2. Commit and push the files.
+3. In the repository, open **Settings → Pages**.
+4. Choose **Deploy from a branch**.
+5. Select `main` and `/(root)`.
+6. Save and wait for the Pages deployment to finish.
 
-## Visual direction
+`index.html` must stay in the repository root.
 
-The design intentionally follows the existing Pokémon Void wiki language rather than generic SaaS/AI-site styling:
+## Current state
 
-- dark purple Void palette (`#9966ff`, `#cc99ff`, `#9980cc`)
-- Verdana/Geneva/Tahoma-family typography
-- hard-edged panels, rules and game-interface framing
-- no stock imagery
-- no generated imagery
-- no glassmorphism
-- no floating gradient blobs
-- no oversized rounded cards
-- no generic marketing illustrations
+The frontend includes:
 
-## Important security boundaries
+- public recruitment home page
+- multi-step application form
+- multi-role question flow
+- applicant status sign-in page
+- applicant interview-ticket layout
+- Director queue layout
+- help and privacy pages
+- mobile layouts
 
-This repository is frontend-only.
+The live backend is intentionally not included here.
 
-Never commit:
+## Backend connection
 
-- applicant answers
-- interview messages
-- Discord OAuth client secrets
-- Cloudflare API secrets
-- D1 credentials
-- encryption/decryption keys
-- production session material
+Edit `assets/js/config.js` when the Cloudflare Worker has a production URL:
 
-Discord OAuth code exchange, secure sessions, validation, spam filtering and database access must happen server-side through Cloudflare Workers.
-
-## Application preview
-
-Because real Discord OAuth is not wired yet, `apply.html` includes a small **Preview connected state** control. It exists only so the form flow can be reviewed without pretending the frontend has authenticated anyone.
-
-Remove that control before production deployment.
-
-## Director portal
-
-`admin.html` contains fake example data only. Production application data must be loaded from authenticated `/api/director/*` endpoints. Hiding the page link is not security; the Worker API must enforce Director authorization on every request.
-
-## Interview encryption
-
-The interview page is only the UI shell. Do not implement the encrypted interview backend until the Directors have agreed on:
-
-- who holds decryption keys
-- whether the host/developer can ever decrypt content
-- key recovery/loss behaviour
-- device/session model
-- metadata retention
-- attachment encryption
-- archive/deletion rules
-
-## Local preview
-
-```bash
-python -m http.server 8080
+```js
+window.VOID_RECRUITMENT = {
+  apiBaseUrl: "https://your-worker.example.workers.dev",
+  discordLoginPath: "/auth/discord"
+};
 ```
 
-Then open `http://localhost:8080`.
+The public repository must not contain:
+
+- Discord client secrets
+- Cloudflare API secrets
+- database credentials
+- applicant records
+- interview contents
+- encryption keys
+- private access tokens
+
+Those belong on the server-side Cloudflare environment.
+
+## Open roles in this build
+
+- Programming
+- Move Animation
+- Spriting
+- Music
+
+Other roles are currently shown as closed.

@@ -1,28 +1,28 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#100b19" />
-  <title>Help — Pokémon Void Recruitment</title>
-  <link rel="stylesheet" href="assets/css/site.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Help · Pokémon Void Recruitment</title>
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="assets/js/config.js" defer></script>
+  <script src="assets/js/site.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header"><div class="topline"></div><div class="header-inner"><a class="brand" href="index.html"><span class="brand-kicker">POKÉMON VOID</span><span class="brand-title">Recruitment</span></a><nav class="main-nav"><a href="index.html">Home</a><a href="apply.html">Apply</a><a href="status.html">Application Status</a><a class="active" href="help.html">Help</a></nav></div></header>
-
-  <main id="main" class="content-shell help-shell">
-    <div class="dashboard-heading"><p class="eyebrow">RECRUITMENT HELP</p><h1>Questions before applying?</h1><p>Basic applicant guidance. Final recruitment policy wording can be replaced without changing the site structure.</p></div>
-    <section class="faq-list">
-      <details open><summary>Why do I need to connect Discord?</summary><p>Discord identifies your recruitment profile, helps prevent duplicate applications, and gives the recruitment team a reliable way to associate your submission with your server account.</p></details>
-      <details><summary>Does Pokémon Void receive my Discord password?</summary><p>No. Authentication will happen through Discord OAuth on Discord's own authorization page. The portal should never receive your password, passkey or 2FA code.</p></details>
-      <details><summary>Do I need to keep checking another website?</summary><p>The portal is where your application and ticket live, but the planned tertiary Discord bot can send important notifications so applicants do not have to repeatedly check for changes.</p></details>
-      <details><summary>Where will interviews happen?</summary><p>Applicants selected for interview will receive access to a private asynchronous recruitment ticket. The final encrypted interview implementation is being designed separately from the public application form.</p></details>
-      <details><summary>Can I upload portfolio files?</summary><p>The final upload rules depend on storage limits. Small image files may be supported directly. Large videos should generally use links or be arranged with recruitment when a role genuinely requires them.</p></details>
-      <details><summary>What happens if my application is declined?</summary><p>The Directors will decide the final notification and retention policy. The portal supports keeping declined applications out of the active queue without exposing them to unrelated staff.</p></details>
-    </section>
-  </main>
-
-  <footer class="site-footer"><div class="content-shell footer-inner"><div><strong>Pokémon Void Recruitment</strong><br><span>Development team application portal.</span></div><div class="footer-links"><a href="help.html">Help</a><a href="privacy.html">Privacy</a></div></div></footer>
+  <header class="site-header"><div class="site-shell header-inner"><a class="brand" href="index.html"><span class="void-emblem" aria-hidden="true"></span><span class="brand-copy"><span class="brand-kicker">Development Team</span><span class="brand-title">Pokémon Void Recruitment</span></span></a><nav class="site-nav" aria-label="Main navigation"><a class="nav-link" href="index.html">Home</a><a class="nav-link" href="apply.html">Apply</a><a class="nav-link" href="status.html">My Application</a><a class="nav-link" href="help.html" aria-current="page">Help</a></nav></div></header>
+  <main class="page"><div class="site-shell"><div class="page-heading"><h1>Recruitment Help</h1><p>Quick answers about applying, interviews, Discord, and portfolios.</p></div>
+    <section class="panel"><h2 class="panel-title">Frequently asked questions</h2><div class="panel-body">
+      <details class="faq-item" open><summary>Do I need a separate account for this site?</summary><p>No. The live portal will use Discord authorization. You sign in through Discord and the recruitment profile is linked to that Discord account.</p></details>
+      <details class="faq-item"><summary>Can I apply for more than one role?</summary><p>Yes. Choose every currently open role you genuinely want to apply for. The form will show the relevant questions for each selection.</p></details>
+      <details class="faq-item"><summary>Which roles are open?</summary><p>Programming, Move Animation, Spriting, and Music are included in the current application flow. Other roles are temporarily closed.</p></details>
+      <details class="faq-item"><summary>How old do I need to be?</summary><p>Applicants must be at least 16. Applicants aged 16–17 require legal guardian permission, a portfolio, and a referral. Applicants aged 18 or older do not need guardian permission.</p></details>
+      <details class="faq-item"><summary>Where will application updates appear?</summary><p>The portal will show your current status. Important updates can also be sent to your Discord account so you do not need to repeatedly check the site.</p></details>
+      <details class="faq-item"><summary>How do interviews work?</summary><p>Applicants who progress can receive a private interview ticket. Director identities may remain hidden during this stage. Some roles or final-stage applicants may be invited to a secluded area of the development Discord for live questions and onboarding.</p></details>
+      <details class="faq-item"><summary>What about large programmer video submissions?</summary><p>Do not worry about finding a permanent host just for the application. If a programming review needs a large direct video submission, the Directors can contact you and arrange a suitable transfer method.</p></details>
+      <details class="faq-item"><summary>Does the site ever ask for my Discord password?</summary><p>No. Discord credentials must only be entered on Discord's own authorization page. This portal only receives the account information Discord authorizes it to use.</p></details>
+    </div></section>
+  </div></main>
+  <footer class="site-footer"><div class="site-shell footer-inner"><span>Pokémon Void Recruitment · <span data-current-year></span></span><span class="footer-links"><a href="privacy.html">Privacy</a><a href="help.html">Help</a></span></div></footer>
+  <div class="toast" data-toast hidden role="status" aria-live="polite"></div>
 </body>
 </html>

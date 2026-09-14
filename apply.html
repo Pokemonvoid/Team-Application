@@ -1,152 +1,290 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#100b19" />
-  <title>Apply — Pokémon Void Recruitment</title>
-  <meta name="description" content="Apply to join the Pokémon Void development team." />
-  <link rel="stylesheet" href="assets/css/site.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Apply to the Pokémon Void development team.">
+  <title>Apply · Pokémon Void Recruitment</title>
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="assets/js/config.js" defer></script>
+  <script src="assets/js/site.js" defer></script>
+  <script src="assets/js/apply.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
-    <div class="topline" aria-hidden="true"></div>
-    <div class="header-inner">
-      <a class="brand" href="index.html"><span class="brand-kicker">POKÉMON VOID</span><span class="brand-title">Recruitment</span></a>
-      <nav class="main-nav" aria-label="Primary navigation"><a href="index.html">Home</a><a class="active" href="apply.html">Apply</a><a href="status.html">Application Status</a><a href="help.html">Help</a></nav>
+    <div class="site-shell header-inner">
+      <a class="brand" href="index.html">
+        <span class="void-emblem" aria-hidden="true"></span>
+        <span class="brand-copy"><span class="brand-kicker">Development Team</span><span class="brand-title">Pokémon Void Recruitment</span></span>
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="apply.html" aria-current="page">Apply</a>
+        <a class="nav-link" href="status.html">My Application</a>
+        <a class="nav-link" href="help.html">Help</a>
+      </nav>
     </div>
   </header>
 
-  <main id="main" class="content-shell application-layout">
-    <aside class="application-sidebar">
-      <p class="eyebrow">APPLICATION</p>
-      <h1>Development Team</h1>
-      <div class="step-list" aria-label="Application steps">
-        <div class="step current"><span>01</span><div><strong>Discord</strong><small>Connect your account</small></div></div>
-        <div class="step"><span>02</span><div><strong>Role</strong><small>Choose a position</small></div></div>
-        <div class="step"><span>03</span><div><strong>Application</strong><small>Answer the questions</small></div></div>
-        <div class="step"><span>04</span><div><strong>Review</strong><small>Confirm and submit</small></div></div>
-      </div>
-      <div class="privacy-note">
-        <strong>Discord security</strong>
-        <p>Login uses Discord OAuth. Your Discord password, passkey and 2FA details are never entered into or stored by this portal.</p>
-      </div>
-    </aside>
-
-    <section class="application-panel">
-      <div class="panel-heading">
-        <p class="eyebrow" data-step-label>STEP 01 / 04</p>
-        <h2>Development Team Application</h2>
-        <p>Your application is associated with your Discord account and reviewed privately by the Director team.</p>
+  <main class="page">
+    <div class="site-shell">
+      <div class="preview-notice">Application preview — you can test the full form, but submission is disabled until the Cloudflare backend is connected.</div>
+      <div class="page-heading">
+        <h1>Development Team Application</h1>
+        <p>Complete the four sections below. The form only shows questions relevant to the role or roles you select.</p>
       </div>
 
-      <form class="application-form" id="application-form" novalidate>
-        <section class="form-step">
-          <div data-oauth-disconnected>
-            <div class="discord-connect-box">
-              <div class="discord-mark" aria-hidden="true">D</div>
-              <div><h3>Continue with Discord</h3><p>You will be redirected to Discord's official authorization page.</p></div>
-              <button class="button button-primary" type="button" data-demo-oauth>Connect Discord</button>
+      <div class="apply-layout">
+        <aside class="application-steps" aria-label="Application sections">
+          <h2>Application progress</h2>
+          <button class="step-tab is-active" type="button" data-step-tab><span class="step-tab-number">1</span><strong>About you</strong></button>
+          <button class="step-tab" type="button" data-step-tab><span class="step-tab-number">2</span><strong>Roles</strong></button>
+          <button class="step-tab" type="button" data-step-tab><span class="step-tab-number">3</span><strong>Role questions</strong></button>
+          <button class="step-tab" type="button" data-step-tab><span class="step-tab-number">4</span><strong>Review</strong></button>
+        </aside>
+
+        <form class="form-card" data-application-form novalidate>
+          <section class="form-step" data-form-step>
+            <div class="form-card-head">
+              <span class="section-number">Section 01</span>
+              <h2>About you</h2>
+              <p>General information used by the Directors when reviewing your application.</p>
             </div>
-            <p class="integration-note"><strong>Production:</strong> the button will open Discord OAuth through the Cloudflare backend. The client secret never belongs in this site repository.</p>
-            <p class="dev-note oauth-preview">Frontend preview only: <button class="button button-small button-secondary" type="button" data-preview-oauth>Preview connected state</button></p>
-          </div>
+            <div class="form-card-body">
+              <div class="field-grid">
+                <div class="field">
+                  <label for="preferred-name">Name <span class="required">*</span></label>
+                  <input class="text-input" id="preferred-name" name="preferred_name" type="text" maxlength="80" autocomplete="nickname" required placeholder="Name you want us to use">
+                </div>
+                <div class="field">
+                  <label for="timezone">Timezone <span class="required">*</span></label>
+                  <input class="text-input" id="timezone" name="timezone" type="text" maxlength="80" required placeholder="e.g. Pacific/Auckland">
+                  <p class="field-help">We try to fill this automatically from your browser.</p>
+                </div>
+              </div>
 
-          <div class="connected-account" data-oauth-connected hidden>
-            <div class="avatar-placeholder">PV</div>
-            <div><strong>Discord account connected</strong><span>Preview account • Discord ID will be supplied by OAuth</span></div>
-            <span class="status-tag success">CONNECTED</span>
-          </div>
+              <div class="field-grid">
+                <div class="field">
+                  <label for="pronouns">Pronouns</label>
+                  <input class="text-input" id="pronouns" name="pronouns" type="text" maxlength="60" placeholder="Optional">
+                </div>
+                <div class="field">
+                  <label for="age-group">Age disclosure <span class="required">*</span></label>
+                  <select class="select-input" id="age-group" name="age_group" required>
+                    <option value="">Choose one</option>
+                    <option value="16-17">16–17</option>
+                    <option value="18+">18 or older</option>
+                  </select>
+                </div>
+              </div>
 
-          <div class="form-actions">
-            <span class="save-copy">Nothing is submitted during this step.</span>
-            <div class="form-actions-right"><button class="button button-primary" type="button" data-step-next disabled>Continue</button></div>
-          </div>
-        </section>
+              <div class="conditional-block" data-under-18 hidden>
+                <strong>Applicants aged 16–17</strong>
+                <p class="field-help">You must have legal guardian permission, provide a portfolio, and have a referral before joining the development team.</p>
+                <div class="field-grid" style="margin-top:12px;">
+                  <div class="field">
+                    <label for="referral">Referral <span class="required">*</span></label>
+                    <input class="text-input" id="referral" name="referral" type="text" maxlength="100" placeholder="Who referred you?">
+                  </div>
+                  <div class="field">
+                    <label for="minor-portfolio">Portfolio <span class="required">*</span></label>
+                    <input class="text-input" id="minor-portfolio" name="minor_portfolio" type="url" placeholder="Portfolio, repository, or work examples link">
+                  </div>
+                </div>
+                <div class="field">
+                  <span class="field-label">Guardian permission <span class="required">*</span></span>
+                  <label class="check-line"><input type="checkbox" name="guardian_permission"><span>I confirm I have permission from my legal guardian to apply.</span></label>
+                </div>
+              </div>
 
-        <section class="form-step" hidden>
-          <fieldset>
-            <legend>Role selection</legend>
-            <label for="role">Role you are applying for <span class="required">Required</span></label>
-            <select id="role" name="role" required>
-              <option value="">Select a role…</option>
-              <option>Pixel Artist / Spriter</option>
-              <option>Programmer</option>
-              <option>Writer / Designer</option>
-              <option>Mapper / Environment</option>
-              <option>Other Development Role</option>
-            </select>
-            <div class="role-brief" data-role-brief hidden><strong>What to prepare</strong><p></p></div>
+              <div class="field">
+                <label for="experience">Experience <span class="required">*</span></label>
+                <textarea class="text-area" id="experience" name="experience" maxlength="3000" required placeholder="Tell us about your relevant experience, how long you have been doing it, and what you are comfortable working on."></textarea>
+              </div>
 
-            <label for="role-detail">If you selected “Other”, what role are you proposing?</label>
-            <input id="role-detail" name="role-detail" type="text" maxlength="120" placeholder="Optional" />
-          </fieldset>
+              <div class="field">
+                <label for="interests">What interests you? <span class="required">*</span></label>
+                <textarea class="text-area" id="interests" name="interests" maxlength="2500" required placeholder="What interests you about Pokémon Void and why do you want to work with the team?"></textarea>
+              </div>
 
-          <div class="form-actions">
-            <span class="save-copy">Role requirements can be changed later without redesigning the form.</span>
-            <div class="form-actions-right"><button class="button button-secondary" type="button" data-step-back>Back</button><button class="button button-primary" type="button" data-step-next>Continue</button></div>
-          </div>
-        </section>
+              <div class="field">
+                <label for="critique">Critique <span class="required">*</span></label>
+                <textarea class="text-area" id="critique" name="critique" maxlength="2000" required placeholder="How do you normally handle critique, revisions, or being asked to redo part of your work?"></textarea>
+              </div>
 
-        <section class="form-step" hidden>
-          <fieldset>
-            <legend>Application questions</legend>
-            <label for="experience">Tell us about your relevant experience. <span class="required">Required</span></label>
-            <textarea id="experience" name="experience" rows="7" minlength="80" maxlength="4000" required placeholder="Be specific about what you have worked on, what you personally contributed, and the tools you are comfortable using."></textarea>
-            <div class="field-meta"><span>Minimum 80 characters</span><span data-count-for="experience">0 / 4000</span></div>
+              <div class="field">
+                <label for="pokemon-projects">Personal Pokémon-related projects / work <span class="required">*</span></label>
+                <textarea class="text-area" id="pokemon-projects" name="pokemon_projects" maxlength="3000" required placeholder="Tell us about Pokémon projects, fangames, mods, art, music, code, or other related work you have contributed to. If none, say so."></textarea>
+              </div>
 
-            <label for="why">Why would you like to contribute to Pokémon Void? <span class="required">Required</span></label>
-            <textarea id="why" name="why" rows="6" minlength="60" maxlength="3000" required></textarea>
-            <div class="field-meta"><span>Minimum 60 characters</span><span data-count-for="why">0 / 3000</span></div>
+              <div class="form-actions">
+                <span></span>
+                <div class="right-actions"><button class="game-button" type="button" data-next-step>Continue to roles</button></div>
+              </div>
+            </div>
+          </section>
 
-            <label for="availability">What sort of availability can you usually offer? <span class="required">Required</span></label>
-            <textarea id="availability" name="availability" rows="4" minlength="30" maxlength="1200" required placeholder="A broad answer is enough — for example, a few evenings per week."></textarea>
-            <div class="field-meta"><span>Do not provide private schedules, addresses or other unnecessary personal details.</span><span data-count-for="availability">0 / 1200</span></div>
-          </fieldset>
+          <section class="form-step" data-form-step hidden>
+            <div class="form-card-head">
+              <span class="section-number">Section 02</span>
+              <h2>Choose your role</h2>
+              <p>You can apply for more than one open role in the same application.</p>
+            </div>
+            <div class="form-card-body">
+              <div class="choice-grid">
+                <label class="choice-card">
+                  <input type="checkbox" name="roles" value="Programming">
+                  <span class="choice-face"><strong>Programming</strong><span>Pokémon Essentials, RPG Maker XP, events, plugins, UI and game systems.</span></span>
+                </label>
+                <label class="choice-card">
+                  <input type="checkbox" name="roles" value="Move Animation">
+                  <span class="choice-face"><strong>Move Animation</strong><span>Move animation work reviewed by the relevant Director.</span></span>
+                </label>
+                <label class="choice-card">
+                  <input type="checkbox" name="roles" value="Spriting">
+                  <span class="choice-face"><strong>Spriting</strong><span>Sprites, icons, palettes, tilesets and related pixel-art work.</span></span>
+                </label>
+                <label class="choice-card">
+                  <input type="checkbox" name="roles" value="Music">
+                  <span class="choice-face"><strong>Music</strong><span>Composition and music work suited to Pokémon Void.</span></span>
+                </label>
+              </div>
 
-          <fieldset>
-            <legend>Portfolio / supporting material</legend>
-            <label for="portfolio">Portfolio or work links</label>
-            <textarea id="portfolio" name="portfolio" rows="4" maxlength="2000" placeholder="Paste relevant links, one per line."></textarea>
-            <div class="field-meta"><span>Small image uploads can be added once Cloudflare storage rules are final. Large video submissions should stay link-based or be arranged separately.</span><span data-count-for="portfolio">0 / 2000</span></div>
-          </fieldset>
+              <div class="closed-note">Other roles are temporarily closed. Please only select roles listed above.</div>
 
-          <div class="form-actions">
-            <span class="save-copy">Draft saving will be added through the authenticated backend, not browser storage.</span>
-            <div class="form-actions-right"><button class="button button-secondary" type="button" data-step-back>Back</button><button class="button button-primary" type="button" data-step-next>Review</button></div>
-          </div>
-        </section>
+              <div class="form-actions">
+                <button class="game-button secondary" type="button" data-prev-step>Back</button>
+                <div class="right-actions"><button class="game-button" type="button" data-next-step>Continue to questions</button></div>
+              </div>
+            </div>
+          </section>
 
-        <section class="form-step" hidden>
-          <fieldset>
-            <legend>Review your application</legend>
-            <dl class="review-block">
-              <div class="review-line"><dt>Role</dt><dd data-review="role">—</dd></div>
-              <div class="review-line"><dt>Relevant experience</dt><dd data-review="experience">—</dd></div>
-              <div class="review-line"><dt>Why Pokémon Void</dt><dd data-review="why">—</dd></div>
-              <div class="review-line"><dt>Availability</dt><dd data-review="availability">—</dd></div>
-              <div class="review-line"><dt>Portfolio / links</dt><dd data-review="portfolio">—</dd></div>
-            </dl>
-          </fieldset>
+          <section class="form-step" data-form-step hidden>
+            <div class="form-card-head">
+              <span class="section-number">Section 03</span>
+              <h2>Role questions</h2>
+              <p>Only the sections for your selected roles are shown.</p>
+            </div>
+            <div class="form-card-body">
+              <div class="inline-alert" data-no-role-questions>Select a role in the previous section to see its questions.</div>
 
-          <fieldset class="agreement-box">
-            <legend>Before submitting</legend>
-            <label class="check-row"><input type="checkbox" required /><span>I confirm that the information in this application is my own and is accurate to the best of my knowledge.</span></label>
-            <label class="check-row"><input type="checkbox" required /><span>I understand that submitting an application does not guarantee an interview or development position.</span></label>
-            <label class="check-row"><input type="checkbox" required /><span>I understand that recruitment information will be handled according to the portal privacy notice.</span></label>
-          </fieldset>
+              <section class="role-question-block" data-role-questions="Programming" hidden>
+                <div class="role-question-head"><strong>Programming</strong></div>
+                <div class="role-question-body">
+                  <div class="field">
+                    <label for="programming-kind">What kind of programming do you do?</label>
+                    <textarea class="text-area" id="programming-kind" name="programming_kind" maxlength="2500" placeholder="Languages, engines, tools, scripting, plugins, UI, systems work, or anything else relevant."></textarea>
+                  </div>
+                  <div class="field">
+                    <label for="essentials-familiarity">Familiarity with Pokémon Essentials / RPG Maker XP</label>
+                    <textarea class="text-area" id="essentials-familiarity" name="essentials_familiarity" maxlength="2500" placeholder="Tell us what you have used before. Experience with other RPG Maker versions is also useful."></textarea>
+                  </div>
+                  <div class="field">
+                    <span class="field-label">What would you like to work on?</span>
+                    <div class="check-list">
+                      <label class="check-line"><input type="checkbox" name="programming_interest" value="Moves"><span>Moves and battle functionality</span></label>
+                      <label class="check-line"><input type="checkbox" name="programming_interest" value="Events"><span>Events and in-game scripting</span></label>
+                      <label class="check-line"><input type="checkbox" name="programming_interest" value="Plugins"><span>Plugins and game systems</span></label>
+                      <label class="check-line"><input type="checkbox" name="programming_interest" value="UI"><span>User interface</span></label>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label for="programming-other">Anything else you want to work on?</label>
+                    <textarea class="text-area" id="programming-other" name="programming_other" maxlength="1800" placeholder="Optional"></textarea>
+                  </div>
+                  <div class="inline-alert">Programming applicants who progress may continue to a non-anonymous Discord interview with the relevant Directors.</div>
+                </div>
+              </section>
 
-          <div class="form-actions">
-            <span class="save-copy">The production backend will validate every field again before anything is written to the database.</span>
-            <div class="form-actions-right"><button class="button button-secondary" type="button" data-step-back>Back</button><button class="button button-primary" type="submit">Submit Application</button></div>
-          </div>
-        </section>
-      </form>
-    </section>
+              <section class="role-question-block" data-role-questions="Move Animation" hidden>
+                <div class="role-question-head"><strong>Move Animation</strong></div>
+                <div class="role-question-body">
+                  <p class="intro-copy" style="font-size:13px;">There are no additional written questions for this role at this stage. Your general application will be forwarded to Ed for review.</p>
+                </div>
+              </section>
+
+              <section class="role-question-block" data-role-questions="Spriting" hidden>
+                <div class="role-question-head"><strong>Spriting</strong></div>
+                <div class="role-question-body">
+                  <div class="field">
+                    <span class="field-label">Spriting abilities</span>
+                    <p class="field-help">Choose everything you are comfortable working on.</p>
+                    <div class="check-list">
+                      <label class="check-line"><input type="checkbox" name="spriting_ability" value="Pokemon Sprites"><span>Pokémon sprites</span></label>
+                      <label class="check-line"><input type="checkbox" name="spriting_ability" value="Icons"><span>Icons</span></label>
+                      <label class="check-line"><input type="checkbox" name="spriting_ability" value="Palettes"><span>Palettes / recolouring</span></label>
+                      <label class="check-line"><input type="checkbox" name="spriting_ability" value="Tilesets"><span>Tilesets</span></label>
+                      <label class="check-line"><input type="checkbox" name="spriting_ability" value="Other"><span>Other pixel-art work</span></label>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label for="sprite-portfolio">Portfolio</label>
+                    <input class="text-input" id="sprite-portfolio" name="sprite_portfolio" type="url" placeholder="Portfolio link">
+                    <p class="field-help">Direct uploads will be connected when the storage backend is ready.</p>
+                  </div>
+                  <div class="field">
+                    <label for="sprite-style">Style comfortability</label>
+                    <textarea class="text-area" id="sprite-style" name="sprite_style" maxlength="2200" placeholder="Which sprite styles, sizes, or kinds of pixel art are you most comfortable with?"></textarea>
+                  </div>
+                  <div class="field">
+                    <label for="sprite-no-portfolio">If you do not have a portfolio, tell us about your art experience.</label>
+                    <textarea class="text-area" id="sprite-no-portfolio" name="sprite_no_portfolio" maxlength="2200" placeholder="Leave blank if your portfolio already covers this."></textarea>
+                  </div>
+                </div>
+              </section>
+
+              <section class="role-question-block" data-role-questions="Music" hidden>
+                <div class="role-question-head"><strong>Music</strong></div>
+                <div class="role-question-body">
+                  <div class="field">
+                    <label for="music-portfolio">Portfolio</label>
+                    <input class="text-input" id="music-portfolio" name="music_portfolio" type="url" placeholder="Portfolio or examples link">
+                  </div>
+                  <div class="field">
+                    <label for="music-style">Style comfortability</label>
+                    <textarea class="text-area" id="music-style" name="music_style" maxlength="2200" placeholder="Which styles, moods, instruments, or kinds of game music are you most comfortable producing?"></textarea>
+                  </div>
+                  <div class="field">
+                    <label for="music-no-portfolio">If you do not have a portfolio, tell us about your music experience.</label>
+                    <textarea class="text-area" id="music-no-portfolio" name="music_no_portfolio" maxlength="2200" placeholder="Leave blank if your portfolio already covers this."></textarea>
+                  </div>
+                </div>
+              </section>
+
+              <div class="form-actions">
+                <button class="game-button secondary" type="button" data-prev-step>Back</button>
+                <div class="right-actions"><button class="game-button" type="button" data-next-step>Review application</button></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-step" data-form-step hidden>
+            <div class="form-card-head">
+              <span class="section-number">Section 04</span>
+              <h2>Review and submit</h2>
+              <p>Check the important details before sending your application.</p>
+            </div>
+            <div class="form-card-body">
+              <dl class="review-list" data-review-list></dl>
+              <div class="privacy-strip">
+                <span class="privacy-mark" aria-hidden="true">i</span>
+                <div>Your submission will be stored on the protected recruitment backend, not in the public website repository.</div>
+              </div>
+              <label class="check-line" style="margin-top:14px;"><input type="checkbox" name="accuracy_confirmed" required><span>I confirm the information in this application is accurate and I am submitting it for Director review.</span></label>
+              <div class="form-actions">
+                <button class="game-button secondary" type="button" data-prev-step>Back</button>
+                <div class="right-actions"><button class="game-button" type="submit">Submit application</button></div>
+              </div>
+            </div>
+          </section>
+        </form>
+      </div>
+    </div>
   </main>
 
-  <footer class="site-footer"><div class="content-shell footer-inner"><div><strong>Pokémon Void Recruitment</strong><br><span>Development team application portal.</span></div><div class="footer-links"><a href="help.html">Help</a><a href="privacy.html">Privacy</a></div></div></footer>
-  <script src="assets/js/site.js"></script>
+  <footer class="site-footer">
+    <div class="site-shell footer-inner"><span>Pokémon Void Recruitment · <span data-current-year></span></span><span class="footer-links"><a href="privacy.html">Privacy</a><a href="help.html">Help</a></span></div>
+  </footer>
+  <div class="toast" data-toast hidden role="status" aria-live="polite"></div>
 </body>
 </html>

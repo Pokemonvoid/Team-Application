@@ -1,75 +1,66 @@
-# Pokémon Void Recruitment Portal — Backend/API Contract Draft
+# Recruitment Backend Contract
 
-This is the hand-off boundary between the static frontend, Cloudflare backend and Dark's tertiary Discord notification bot.
+This document is a working interface outline for the Cloudflare backend and the tertiary Discord notification bot.
 
-## Security rule
+## Public frontend
 
-The browser never talks directly to D1. All reads/writes go through authenticated Cloudflare Worker endpoints. Every Director endpoint must validate the current Discord session against the server-side Director allowlist/role policy.
+The frontend should only call HTTPS API routes. It must never receive database credentials, Discord client secrets, or encryption keys intended for server-side use.
 
-## Applicant endpoints
+Suggested routes:
 
-- `GET /auth/discord/start`
-  - Creates OAuth state server-side and redirects to Discord.
+- `GET /auth/discord`
 - `GET /auth/discord/callback`
-  - Exchanges Discord code server-side, creates secure session and redirects to portal.
 - `POST /auth/logout`
 - `GET /api/me`
-  - Basic recruitment profile: Discord id, display name/avatar if retained, account state.
-- `GET /api/application/me`
-  - Returns only the logged-in applicant's active application and permitted status information.
+- `GET /api/application`
 - `POST /api/application`
-  - Creates application after server-side validation, rate-limit and spam checks.
-- `PATCH /api/application/me`
-  - Optional draft/edit endpoint before review begins.
-- `GET /api/interview/me`
-  - Future encrypted ticket metadata/ciphertext only, according to the final encryption design.
-- `POST /api/interview/me/messages`
-  - Future encrypted applicant message submission.
+- `PATCH /api/application`
+- `GET /api/interview`
+- `POST /api/interview/messages`
 
-## Director endpoints
+## Director routes
 
-All `/api/director/*` endpoints must reject non-Director sessions regardless of what the frontend shows.
+Every Director route must verify the authenticated Discord account against the authorised Director list on the backend.
 
-- `GET /api/director/applications?status=NEW`
+Suggested routes:
+
+- `GET /api/director/applications`
 - `GET /api/director/applications/:id`
 - `POST /api/director/applications/:id/claim`
 - `POST /api/director/applications/:id/hold`
-- `POST /api/director/applications/:id/request-info`
-- `POST /api/director/applications/:id/invite-interview`
-- `POST /api/director/applications/:id/decline`
+- `POST /api/director/applications/:id/interview`
 - `POST /api/director/applications/:id/accept`
+- `POST /api/director/applications/:id/decline`
 
-## Bot integration
+## Bot events
 
-Dark's bot should not receive or store full applications/interview content.
+The bot does not need application answers or interview contents just to send notifications.
 
-Suggested backend-to-bot event payloads:
+Suggested outbound events from the backend:
 
 ### New application
 
 ```json
 {
-  "event": "application.created",
-  "application_id": "PV-24018",
-  "role": "Pixel Artist / Spriter",
-  "status": "NEW",
-  "flagged": false
+  "type": "application.created",
+  "applicationId": "PV-1042",
+  "roles": ["Spriting"],
+  "submittedAt": "2026-09-14T08:00:00Z"
 }
 ```
 
-### Applicant notification
+### Applicant status notification
 
 ```json
 {
-  "event": "applicant.notify",
-  "discord_user_id": "1234567890",
-  "notification_type": "interview_invite",
-  "application_id": "PV-24018"
+  "type": "applicant.notify",
+  "discordUserId": "123456789012345678",
+  "notification": "interview_invited"
 }
 ```
 
-Do not put confidential answers or interview text in Discord webhook payloads unless the Directors explicitly redesign that requirement.
+The bot can translate the notification key into the approved Discord message text.
 
-## Frontend hosting
+## Storage boundary
 
-The current site is static and can be hosted on GitHub Pages. No production secrets or confidential records belong in the repo.
+The static GitHub Pages repository stores public frontend files only. Sensitive recruitment records belong in Cloudflare storage. The interview encryption design should be finalised before interview messages are stored in production.

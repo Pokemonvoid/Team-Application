@@ -1,58 +1,61 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#100b19" />
-  <title>Director Portal — Pokémon Void Recruitment</title>
-  <link rel="stylesheet" href="assets/css/site.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Director Portal · Pokémon Void Recruitment</title>
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="assets/js/config.js" defer></script>
+  <script src="assets/js/site.js" defer></script>
 </head>
 <body>
-  <header class="site-header"><div class="topline"></div><div class="header-inner"><a class="brand" href="index.html"><span class="brand-kicker">POKÉMON VOID</span><span class="brand-title">Director Portal</span></a><nav class="main-nav"><a href="index.html">Public Portal</a><a class="active" href="admin.html">Applications</a></nav></div></header>
+  <header class="site-header">
+    <div class="site-shell header-inner">
+      <a class="brand" href="index.html"><span class="void-emblem" aria-hidden="true"></span><span class="brand-copy"><span class="brand-kicker">Director Access</span><span class="brand-title">Pokémon Void Recruitment</span></span></a>
+      <nav class="site-nav" aria-label="Main navigation"><a class="nav-link" href="index.html">Public portal</a><a class="nav-link" href="admin.html" aria-current="page">Director portal</a></nav>
+    </div>
+  </header>
 
-  <main class="admin-shell">
-    <div class="admin-warning"><strong>Frontend prototype:</strong> this page contains fake demonstration records only. In production, the Cloudflare API must reject every request unless the logged-in Discord ID is an authorised Director.</div>
-    <div class="admin-header"><div><p class="eyebrow">DIRECTOR ONLY</p><h1>Recruitment Queue</h1></div><div><span class="status-tag success">AUTHORISED DIRECTOR</span></div></div>
+  <main class="page">
+    <div class="site-shell">
+      <div class="preview-notice">Director interface preview — production access must be enforced by the backend. Hiding this URL is not security.</div>
+      <section class="admin-shell">
+        <aside class="admin-side">
+          <div class="admin-side-head"><strong>Recruitment queue</strong><span>Sample interface</span></div>
+          <a class="admin-nav-link is-active" href="#"><span>New</span><span class="count-box">12</span></a>
+          <a class="admin-nav-link" href="#"><span>Flagged</span><span class="count-box">3</span></a>
+          <a class="admin-nav-link" href="#"><span>In review</span><span class="count-box">6</span></a>
+          <a class="admin-nav-link" href="#"><span>Interview</span><span class="count-box">4</span></a>
+          <a class="admin-nav-link" href="#"><span>On hold</span><span class="count-box">2</span></a>
+          <a class="admin-nav-link" href="#"><span>Archive</span><span class="count-box">—</span></a>
+        </aside>
 
-    <section class="metric-row" aria-label="Queue summary">
-      <div class="metric"><span>New</span><strong>18</strong></div>
-      <div class="metric"><span>Flagged</span><strong>3</strong></div>
-      <div class="metric"><span>In Review</span><strong>7</strong></div>
-      <div class="metric"><span>Interview</span><strong>4</strong></div>
-      <div class="metric"><span>On Hold</span><strong>2</strong></div>
-    </section>
-
-    <div class="admin-layout">
-      <section class="queue-panel">
-        <div class="panel-bar"><h2>Applications</h2><div class="queue-tabs"><button class="queue-tab active" type="button">NEW</button><button class="queue-tab" type="button">FLAGGED</button><button class="queue-tab" type="button">IN REVIEW</button><button class="queue-tab" type="button">INTERVIEW</button></div></div>
-        <div style="overflow-x:auto">
-          <table class="queue-table">
-            <thead><tr><th>ID</th><th>Role</th><th>Received</th><th>Status</th></tr></thead>
-            <tbody>
-              <tr class="selected" data-application-id="PV-24018"><td><strong>PV-24018</strong></td><td>Pixel Artist / Spriter</td><td>12 min ago</td><td><span class="status-tag">NEW</span></td></tr>
-              <tr data-application-id="PV-24017"><td><strong>PV-24017</strong></td><td>Programmer</td><td>28 min ago</td><td><span class="status-tag warning">FLAGGED</span></td></tr>
-              <tr data-application-id="PV-24013"><td><strong>PV-24013</strong></td><td>Writer / Designer</td><td>1 hr ago</td><td><span class="status-tag interview">IN REVIEW</span></td></tr>
-            </tbody>
-          </table>
+        <div class="admin-main">
+          <div class="admin-topbar"><div><h1>New applications</h1></div><a class="game-button compact" href="#" data-backend-action>Refresh</a></div>
+          <div class="admin-content">
+            <div class="queue-toolbar">
+              <span class="tag">Sample data</span>
+              <span class="tag">Director-only in production</span>
+            </div>
+            <div class="queue-table-wrap">
+              <table class="queue-table">
+                <thead><tr><th>Application</th><th>Roles</th><th>Status</th><th>Submitted</th><th>Assigned</th><th></th></tr></thead>
+                <tbody>
+                  <tr><td class="queue-id">PV-1042</td><td>Spriting</td><td><span class="tag">New</span></td><td>Today</td><td>Unclaimed</td><td><a class="game-button compact" href="#" data-backend-action>Open</a></td></tr>
+                  <tr><td class="queue-id">PV-1041</td><td>Programming</td><td><span class="tag flagged">Flagged</span></td><td>Today</td><td>Unclaimed</td><td><a class="game-button compact" href="#" data-backend-action>Open</a></td></tr>
+                  <tr><td class="queue-id">PV-1040</td><td>Music</td><td><span class="tag">New</span></td><td>Yesterday</td><td>Unclaimed</td><td><a class="game-button compact" href="#" data-backend-action>Open</a></td></tr>
+                  <tr><td class="queue-id">PV-1039</td><td>Move Animation</td><td><span class="tag interview">Interview</span></td><td>Yesterday</td><td>Director</td><td><a class="game-button compact" href="#" data-backend-action>Open</a></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </section>
-
-      <aside class="application-preview">
-        <div class="panel-bar"><h2>Application <span data-preview-id>PV-24018</span></h2><span class="status-tag" data-preview-status>NEW</span></div>
-        <div class="preview-body">
-          <h3 data-preview-role>Pixel Artist / Spriter</h3>
-          <div class="preview-meta">
-            <div><span>Received</span><strong data-preview-age>12 min</strong></div>
-            <div><span>Flags</span><strong data-preview-flags>None</strong></div>
-          </div>
-          <div class="preview-answer"><h4>Relevant experience</h4><p data-preview-experience>Applicant supplied several sprite examples and described prior collaborative pixel-art work.</p></div>
-          <div class="preview-answer"><h4>Why Pokémon Void</h4><p data-preview-why>Interested in contributing creature sprites and helping with production clean-up.</p></div>
-        </div>
-        <div class="admin-actions"><button class="button button-small button-secondary" type="button" data-admin-demo-action>Claim</button><button class="button button-small button-primary" type="button" data-admin-demo-action>Invite to Interview</button><button class="button button-small button-secondary" type="button" data-admin-demo-action>Hold</button><button class="button button-small button-danger" type="button" data-admin-demo-action>Decline</button></div>
-      </aside>
     </div>
   </main>
 
-  <script src="assets/js/site.js"></script>
+  <footer class="site-footer"><div class="site-shell footer-inner"><span>Pokémon Void Recruitment · Director Portal</span><span>Production access must be server-side.</span></div></footer>
+  <div class="toast" data-toast hidden role="status" aria-live="polite"></div>
 </body>
 </html>
