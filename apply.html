@@ -14,17 +14,17 @@
 <a class="skip-link" href="#main">Skip to main content</a>
 <header class="site-header">
   <div class="header-inner">
-    <a class="brand" href="index.html" aria-label="Pokémon Void Recruitment home"><span class="pokeball-mark" aria-hidden="true"><span class="ball-top"></span><span class="ball-band"><span class="ball-button"></span></span><span class="ball-bottom"></span></span><span class="brand-copy"><span class="brand-name">Pokémon Void</span><span class="brand-sub">Development Recruitment</span></span></a>
+    <a class="brand" href="index.html" aria-label="Pokémon Void Recruitment home"><svg class="pokeball-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><circle cx="20" cy="20" r="18" fill="#efedeb"/><path d="M2 20a18 18 0 0 1 36 0H2z" fill="#cf4655"/><path d="M2.7 20h34.6" stroke="#111016" stroke-width="6"/><circle cx="20" cy="20" r="8" fill="#111016"/><circle cx="20" cy="20" r="4.2" fill="#efedeb"/><circle cx="20" cy="20" r="18" fill="none" stroke="#efedeb" stroke-width="2.2"/></svg><span class="brand-copy"><span class="brand-name">Pokémon Void</span><span class="brand-sub">recruitment</span></span></a>
     <button class="mobile-menu-button" type="button" data-menu-button aria-expanded="false" aria-label="Open navigation">Menu</button>
-    <nav class="site-nav" data-site-nav aria-label="Main navigation"><a href="index.html">Home</a><a href="apply.html" aria-current="page">Apply</a><a href="status.html">My Application</a><a href="help.html">Help</a></nav>
+    <nav class="site-nav" data-site-nav aria-label="Main navigation"><a href="index.html">Recruitment</a><a href="apply.html" aria-current="page">Apply</a><a href="status.html">My file</a><a href="help.html">Help</a></nav>
   </div>
 </header>
 
 <main id="main">
-  <div class="page-heading">
-    <p class="page-kicker">Development Team Recruitment</p>
-    <h1>Application Form</h1>
-    <p>Complete each section in order. Questions for the roles you select will be added automatically.</p>
+  <div class="page-heading application-heading">
+    <p class="crumbline">application / Pokémon Void development team</p>
+    <h1>Application</h1>
+    <p>Work through the sections in order. Pick more than one role if you want; the form only opens the questions that matter to your choices.</p>
   </div>
 
   <div class="account-strip">
@@ -39,21 +39,21 @@
 
   <div class="application-layout">
     <aside class="step-rail" aria-label="Application progress">
-      <div class="step-rail-title">Application progress</div>
+      <div class="step-rail-title">application route</div>
       <ol class="step-list">
-        <li><button class="step-button" type="button" data-step-jump="1" aria-current="step"><span class="num">01</span><span class="label">Profile</span></button></li>
-        <li><button class="step-button" type="button" data-step-jump="2" disabled><span class="num">02</span><span class="label">Background</span></button></li>
-        <li><button class="step-button" type="button" data-step-jump="3" disabled><span class="num">03</span><span class="label">Roles</span></button></li>
-        <li><button class="step-button" type="button" data-step-jump="4" disabled><span class="num">04</span><span class="label">Role Details</span></button></li>
-        <li><button class="step-button" type="button" data-step-jump="5" disabled><span class="num">05</span><span class="label">Review</span></button></li>
+        <li><button class="step-button" type="button" data-step-jump="1" aria-current="step"><span class="route-node" aria-hidden="true"></span><span class="label">About you</span></button></li>
+        <li><button class="step-button" type="button" data-step-jump="2" disabled><span class="route-node" aria-hidden="true"></span><span class="label">Background</span></button></li>
+        <li><button class="step-button" type="button" data-step-jump="3" disabled><span class="route-node" aria-hidden="true"></span><span class="label">Roles</span></button></li>
+        <li><button class="step-button" type="button" data-step-jump="4" disabled><span class="route-node" aria-hidden="true"></span><span class="label">Role questions</span></button></li>
+        <li><button class="step-button" type="button" data-step-jump="5" disabled><span class="route-node" aria-hidden="true"></span><span class="label">Check & send</span></button></li>
       </ol>
+      <p class="rail-note">Nothing submits until you hit the final button.</p>
     </aside>
 
     <form id="application-form" class="form-shell" novalidate>
       <div class="form-header">
-        <div class="step-label" data-current-step-label>Step 1 of 5</div>
         <h2 data-current-step-title>Your profile</h2>
-        <p>Required questions are marked with <span class="required">*</span>.</p>
+        <p>Required questions are marked with <span class="required">*</span>. Short, direct answers are completely fine when the question only needs one.</p>
       </div>
 
       <div class="form-body">
@@ -107,13 +107,13 @@
             <p class="field-help">You can select more than one role. The next step will only show questions for the roles you choose.</p>
             <div class="field">
               <div class="choice-list" aria-label="Open roles">
-                <label class="choice-row"><input type="checkbox" name="roles" value="programmer" data-label="Programmer"><span><span class="choice-title">Programmer</span><span class="choice-copy">Pokémon Essentials, RPG Maker XP, plugins, events, UI and related systems.</span></span></label>
-                <label class="choice-row"><input type="checkbox" name="roles" value="move-animator" data-label="Move Animator"><span><span class="choice-title">Move Animator</span><span class="choice-copy">Battle move animations and related visual effects.</span></span></label>
-                <label class="choice-row"><input type="checkbox" name="roles" value="spriter" data-label="Spriter"><span><span class="choice-title">Spriter</span><span class="choice-copy">Pokémon sprites, trainers, overworlds, icons, palettes, tilesets and other pixel art.</span></span></label>
-                <label class="choice-row"><input type="checkbox" name="roles" value="music" data-label="Music"><span><span class="choice-title">Music</span><span class="choice-copy">Composition and music work for the project.</span></span></label>
+                <label class="choice-row"><input type="checkbox" name="roles" value="programmer" data-label="Programmer"><span><span class="choice-title">Programmer</span><span class="choice-copy">Essentials / RPG Maker XP work. Events, plugins, UI, moves, or other systems you know well.</span></span></label>
+                <label class="choice-row"><input type="checkbox" name="roles" value="move-animator" data-label="Move Animator"><span><span class="choice-title">Move Animator</span><span class="choice-copy">Battle move animation work. Show us examples if you have them.</span></span></label>
+                <label class="choice-row"><input type="checkbox" name="roles" value="spriter" data-label="Spriter"><span><span class="choice-title">Spriter</span><span class="choice-copy">Battle sprites, overworlds, trainers, icons, palette work, tilesets, and other pixel art.</span></span></label>
+                <label class="choice-row"><input type="checkbox" name="roles" value="music" data-label="Music"><span><span class="choice-title">Music</span><span class="choice-copy">Music for the project. We care about what you make and what styles you are comfortable with.</span></span></label>
               </div>
             </div>
-            <div class="notice-strip"><p><strong>Other roles are temporarily closed.</strong> Please only select a role listed above.</p></div>
+            <div class="notice-strip"><p>Other roles are temporarily closed, so only the roles shown above can be submitted right now.</p></div>
           </fieldset>
         </section>
 
@@ -183,13 +183,13 @@
         <button class="button ghost" type="button" data-back-step hidden>Back</button>
         <div class="right">
           <button class="button primary" type="button" data-next-step>Continue</button>
-          <button class="button gold" type="button" data-submit-application hidden>Submit application</button>
+          <button class="button submit" type="button" data-submit-application hidden>Submit application</button>
         </div>
       </div>
     </form>
   </div>
 </main>
 
-<footer class="site-footer"><div class="footer-inner"><span>Pokémon Void Development Recruitment · <span data-current-year></span></span><span class="footer-links"><a href="privacy.html">Privacy</a><a href="help.html">Help</a></span></div></footer>
+<footer class="site-footer"><div class="footer-inner"><span>Pokémon Void · recruitment <span data-current-year></span></span><span class="footer-links"><a href="privacy.html">Privacy</a><a href="help.html">Help</a></span></div></footer>
 </body>
 </html>

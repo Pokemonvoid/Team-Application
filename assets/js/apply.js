@@ -376,6 +376,12 @@
     input.addEventListener("change", updateRoleSections);
   });
 
+  var requestedRole = new URLSearchParams(window.location.search).get("role");
+  if (requestedRole) {
+    var requestedRoleInput = form.querySelector('input[name="roles"][value="' + requestedRole.replace(/"/g, "") + '"]');
+    if (requestedRoleInput) requestedRoleInput.checked = true;
+  }
+
   form.addEventListener("input", function (event) {
     event.target.removeAttribute("aria-invalid");
     var holder = event.target.closest(".has-error");
