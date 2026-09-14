@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#100b19" />
+  <title>Application Status — Pokémon Void Recruitment</title>
+  <link rel="stylesheet" href="assets/css/site.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header"><div class="topline"></div><div class="header-inner"><a class="brand" href="index.html"><span class="brand-kicker">POKÉMON VOID</span><span class="brand-title">Recruitment</span></a><nav class="main-nav"><a href="index.html">Home</a><a href="apply.html">Apply</a><a class="active" href="status.html">Application Status</a><a href="help.html">Help</a></nav></div></header>
+
+  <main id="main" class="content-shell dashboard-shell">
+    <div class="dashboard-heading"><p class="eyebrow">YOUR RECRUITMENT PROFILE</p><h1>Application Status</h1><p>Once Discord OAuth is connected, this page will load only the application attached to the authenticated Discord account.</p></div>
+
+    <section class="account-strip" aria-label="Demo account profile">
+      <div class="avatar-placeholder">DV</div>
+      <div><strong>Discord account not connected</strong><span>Sign in to view your application and interview tickets.</span></div>
+      <button class="button button-secondary" type="button" data-demo-oauth>Connect Discord</button>
+    </section>
+
+    <section class="ticket-panel">
+      <div class="ticket-header"><div><span class="ticket-label">APPLICATION</span><h2>No active application</h2></div><span class="status-tag muted">NOT SUBMITTED</span></div>
+      <div class="empty-state"><div class="empty-symbol" aria-hidden="true">+</div><h3>You haven't submitted an application yet.</h3><p>Once submitted, this page will show your current stage, important updates, and any private interview ticket you are invited to.</p><a class="button button-primary" href="apply.html">Begin Application</a></div>
+    </section>
+
+    <section class="status-reference">
+      <h2>Possible application stages</h2>
+      <div class="status-lines">
+        <div><span class="status-tag">SUBMITTED</span><p>Application received and waiting for review.</p></div>
+        <div><span class="status-tag">IN REVIEW</span><p>A Director is reviewing your submission.</p></div>
+        <div><span class="status-tag warning">MORE INFO</span><p>Recruitment has requested additional information.</p></div>
+        <div><span class="status-tag interview">INTERVIEW</span><p>You have been invited to the interview stage. <a href="interview.html">Preview ticket UI</a></p></div>
+        <div><span class="status-tag success">COMPLETE</span><p>A final decision has been recorded.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="content-shell footer-inner"><div><strong>Pokémon Void Recruitment</strong><br><span>Development team application portal.</span></div><div class="footer-links"><a href="help.html">Help</a><a href="privacy.html">Privacy</a></div></div></footer>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>
