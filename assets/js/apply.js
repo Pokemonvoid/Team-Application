@@ -1,201 +1,227 @@
 (function () {
   "use strict";
-
-  var form = document.getElementById("application-form");
+  const form = document.getElementById("application-form");
   if (!form) return;
-
-  var helpers = window.VoidRecruitment;
-  var steps = Array.prototype.slice.call(form.querySelectorAll("[data-form-step]"));
-  var stepButtons = Array.prototype.slice.call(document.querySelectorAll("[data-step-jump]"));
-  var currentStep = 1;
-  var maxVisited = 1;
-  var totalSteps = steps.length;
-
-  function fieldLabel(field) {
-    if (field.dataset.errorLabel) return field.dataset.errorLabel;
-    var id = field.id;
-    if (id) {
-      var label = form.querySelector('label[for="' + CSS.escape(id) + '"]');
-      if (label) return label.textContent.replace("*", "").trim();
-    }
-    return field.name || "This field";
-  }
-
-  function clearErrors() {
-    form.querySelectorAll(".has-error").forEach(function (node) {
-      node.classList.remove("has-error");
-    });
-    form.querySelectorAll(".field-error").forEach(function (node) {
-      node.remove();
-    });
-    var summary = document.getElementById("error-summary");
-    if (summary) {
-      summary.hidden = true;
-      summary.querySelector("ul").innerHTML = "";
-    }
-  }
-
-  function markError(field, message) {
-    var holder = field.closest(".field") || field.closest("fieldset") || field.parentElement;
-    if (holder) holder.classList.add("has-error");
-    field.setAttribute("aria-invalid", "true");
-
-    var error = document.createElement("div");
-    error.className = "field-error";
-    error.textContent = message;
-    if (holder) holder.appendChild(error);
-  }
-
-  function requiredRadioGroup(name, label) {
-    var radios = Array.prototype.slice.call(form.querySelectorAll('input[name="' + name + '"]'));
-    if (!radios.length || radios.some(function (radio) { return radio.checked; })) return null;
-    return { field: radios[0], message: "Choose " + label + "." };
-  }
-
-  function requiredCheckboxGroup(name, label) {
-    var checks = Array.prototype.slice.call(form.querySelectorAll('input[name="' + name + '"]'));
-    if (!checks.length || checks.some(function (check) { return check.checked; })) return null;
-    return { field: checks[0], message: "Choose at least one " + label + "." };
-  }
-
-  function validateVisibleStep(stepNumber) {
-    clearErrors();
-    var step = form.querySelector('[data-form-step="' + stepNumber + '"]');
-    if (!step) return true;
-    var errors = [];
-
-    Array.prototype.slice.call(step.querySelectorAll("[required]")).forEach(function (field) {
-      if (field.disabled || field.closest("[hidden]")) return;
-      if (field.type === "radio" || field.type === "checkbox") return;
-      if (!String(field.value || "").trim()) {
-        errors.push({ field: field, message: fieldLabel(field) + " is required." });
-      } else if (field.type === "url") {
-        try {
-          new URL(field.value);
-        } catch (error) {
-          errors.push({ field: field, message: "Enter a complete link beginning with http:// or https://." });
-        }
+  const helpers = window.VoidRecruitment;
+  const steps = [...form.querySelectorAll("[data-form-step]")];
+  const stepButtons = [...document.querySelectorAll("[data-step-jump]")];
+  const key = "void-recruitment-draft-v1";
+  let currentStep = 1,
+    maxVisited = 1,
+    submitting = false,
+    dirty = false,
+    previewFinished = false;
+  let reviewStep = 1;
+  const totalSteps = 5;
+  const stepFor = (n) => form.querySelector('[data-form-step="' + n + '"]');
+  const storage = {
+    read() {
+      try {
+        return JSON.parse(sessionStorage.getItem(key));
+      } catch {
+        return null;
       }
-    });
-
-    if (stepNumber === 1) {
-      var ageError = requiredRadioGroup("ageGroup", "an age bracket");
-      if (ageError) errors.push(ageError);
-    }
-
-    if (stepNumber === 3) {
-      var roleError = requiredCheckboxGroup("roles", "role");
-      if (roleError) errors.push(roleError);
-    }
-
-    if (stepNumber === 4) {
-      selectedRoles().forEach(function (role) {
-        var section = form.querySelector('[data-role-section="' + role + '"]');
-        if (!section || section.hidden) return;
-        Array.prototype.slice.call(section.querySelectorAll("[data-role-required]"))
-          .forEach(function (field) {
-            if (!String(field.value || "").trim()) {
-              errors.push({ field: field, message: fieldLabel(field) + " is required for this role." });
-            }
-          });
-
-        if (role === "programmer") {
-          var workError = requiredCheckboxGroup("programmerWork", "programming area");
-          if (workError) errors.push(workError);
-        }
-        if (role === "spriter") {
-          var spriteError = requiredCheckboxGroup("spritingAbilities", "spriting area");
-          if (spriteError) errors.push(spriteError);
-        }
-      });
-    }
-
-    if (!errors.length) return true;
-
-    errors.forEach(function (item) {
-      item.field.removeAttribute("aria-invalid");
-      markError(item.field, item.message);
-    });
-
-    var summary = document.getElementById("error-summary");
-    if (summary) {
-      var list = summary.querySelector("ul");
-      errors.forEach(function (item, index) {
-        if (!item.field.id) item.field.id = "field-error-target-" + stepNumber + "-" + index;
-        var li = document.createElement("li");
-        var link = document.createElement("a");
-        link.href = "#" + item.field.id;
-        link.textContent = item.message;
-        li.appendChild(link);
-        list.appendChild(li);
-      });
-      summary.hidden = false;
-      summary.focus();
-    }
-    return false;
-  }
-
+    },
+    write(data) {
+      try {
+        sessionStorage.setItem(key, JSON.stringify(data));
+        return true;
+      } catch {
+        return false;
+      }
+    },
+    clear() {
+      try {
+        sessionStorage.removeItem(key);
+      } catch {}
+    },
+  };
   function selectedRoles() {
-    return Array.prototype.slice.call(form.querySelectorAll('input[name="roles"]:checked'))
-      .map(function (input) { return input.value; });
+    return [...form.querySelectorAll('input[name="roles"]:checked')].map(
+      (f) => f.value,
+    );
   }
-
+  function saveDraft(previewComplete = previewFinished) {
+    previewFinished = previewComplete;
+    const values = {};
+    for (const field of form.querySelectorAll(
+      "input[name], textarea[name], select[name]",
+    )) {
+      if (field.type === "checkbox" || field.type === "radio") {
+        if (!values[field.name]) values[field.name] = [];
+        if (field.checked) values[field.name].push(field.value);
+      } else values[field.name] = field.value;
+    }
+    const saved = storage.write({
+      version: 1,
+      values,
+      step: currentStep,
+      maxVisited,
+      updatedAt: new Date().toISOString(),
+      previewComplete,
+    });
+    document.querySelector("[data-draft-state]").textContent = saved
+      ? "Draft saved in this tab. Nothing sent."
+      : "Answers kept on this page. Keep it open.";
+    return saved;
+  }
+  function clearErrors() {
+    for (const f of form.querySelectorAll("[aria-invalid]")) {
+      f.removeAttribute("aria-invalid");
+      const ids = (f.getAttribute("aria-describedby") || "")
+        .split(" ")
+        .filter((id) => !id.startsWith("validation-"));
+      if (ids.length) f.setAttribute("aria-describedby", ids.join(" "));
+      else f.removeAttribute("aria-describedby");
+    }
+    for (const n of form.querySelectorAll(".has-error"))
+      n.classList.remove("has-error");
+    for (const n of form.querySelectorAll(".field-error")) n.remove();
+    const summary = document.getElementById("error-summary");
+    summary.hidden = true;
+    summary.querySelector("ul").replaceChildren();
+  }
+  function fieldLabel(field) {
+    return (
+      field.dataset.errorLabel ||
+      (
+        form.querySelector('label[for="' + CSS.escape(field.id) + '"]')
+          ?.textContent || field.name
+      )
+        .replace(/\*/g, "")
+        .replace(/Optional/g, "")
+        .trim()
+    );
+  }
+  function errorsFor(n) {
+    const errors = [];
+    const step = stepFor(n);
+    for (const field of step.querySelectorAll("input,textarea,select")) {
+      const role = field.closest("[data-role-section]");
+      if (
+        field.disabled ||
+        (role && !selectedRoles().includes(role.dataset.roleSection))
+      )
+        continue;
+      if (field.type === "checkbox" || field.type === "radio") continue;
+      const val = field.value.trim();
+      if ((field.required || field.hasAttribute("data-role-required")) && !val)
+        errors.push({
+          field,
+          message: "Enter " + fieldLabel(field).toLowerCase() + ".",
+        });
+      else if (field.type === "url" && val) {
+        let valid = false;
+        try {
+          valid = ["http:", "https:"].includes(new URL(val).protocol);
+        } catch {}
+        if (!valid)
+          errors.push({
+            field,
+            message: "Enter a complete http:// or https:// link.",
+          });
+      }
+    }
+    function group(name, message) {
+      const all = [...step.querySelectorAll('input[name="' + name + '"]')];
+      if (all.length && !all.some((f) => f.checked))
+        errors.push({ field: all[0], message });
+    }
+    if (n === 1) group("ageGroup", "Choose an age bracket.");
+    if (n === 2) group("roles", "Choose at least one role.");
+    if (n === 4) {
+      if (selectedRoles().includes("programmer"))
+        group("programmerWork", "Choose at least one programming area.");
+      if (selectedRoles().includes("spriter"))
+        group("spritingAbilities", "Choose at least one spriting area.");
+    }
+    return errors;
+  }
+  function renderErrors(errors) {
+    clearErrors();
+    const summary = document.getElementById("error-summary");
+    errors.forEach(({ field, message }, i) => {
+      const holder = field.closest(".field") || field.parentElement;
+      holder.classList.add("has-error");
+      field.setAttribute("aria-invalid", "true");
+      if (!field.id) field.id = "answer-" + currentStep + "-" + i;
+      const error = document.createElement("p");
+      error.id = "validation-" + field.id;
+      error.className = "field-error";
+      error.textContent = message;
+      holder.append(error);
+      field.setAttribute(
+        "aria-describedby",
+        (
+          (field.getAttribute("aria-describedby") || "") +
+          " " +
+          error.id
+        ).trim(),
+      );
+      const li = document.createElement("li"),
+        a = document.createElement("a");
+      a.href = "#" + field.id;
+      a.textContent = message;
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        field.focus();
+        field.scrollIntoView({ block: "center" });
+      });
+      li.append(a);
+      summary.querySelector("ul").append(li);
+    });
+    summary.hidden = false;
+    summary.focus();
+    summary.scrollIntoView({ block: "start" });
+  }
   function updateRoleSections() {
-    var selected = selectedRoles();
-    form.querySelectorAll("[data-role-section]").forEach(function (section) {
-      section.hidden = selected.indexOf(section.dataset.roleSection) === -1;
-    });
-
-    var empty = document.querySelector("[data-no-role-details]");
-    if (empty) empty.hidden = selected.length > 0;
+    const roles = selectedRoles();
+    for (const section of form.querySelectorAll("[data-role-section]"))
+      section.hidden = !roles.includes(section.dataset.roleSection);
+    document.querySelector("[data-no-role-details]").hidden = roles.length > 0;
   }
-
-  function stepTitle(stepNumber) {
-    var step = form.querySelector('[data-form-step="' + stepNumber + '"]');
-    return step ? (step.dataset.stepTitle || "Application") : "Application";
-  }
-
-  function showStep(stepNumber, pushHash) {
-    stepNumber = Math.max(1, Math.min(totalSteps, stepNumber));
-    currentStep = stepNumber;
+  function showStep(n, push = true, focus = true) {
+    currentStep = Math.max(1, Math.min(5, n));
     maxVisited = Math.max(maxVisited, currentStep);
-
-    steps.forEach(function (step) {
-      step.hidden = Number(step.dataset.formStep) !== currentStep;
-    });
-
-    stepButtons.forEach(function (button) {
-      var number = Number(button.dataset.stepJump);
-      button.disabled = number > maxVisited;
-      button.setAttribute("aria-current", number === currentStep ? "step" : "false");
-      button.dataset.complete = number < currentStep ? "true" : "false";
-    });
-
-    var currentLabel = document.querySelector("[data-current-step-label]");
-    if (currentLabel) currentLabel.textContent = "Step " + currentStep + " of " + totalSteps;
-    var currentTitle = document.querySelector("[data-current-step-title]");
-    if (currentTitle) currentTitle.textContent = stepTitle(currentStep);
-
-    var back = document.querySelector("[data-back-step]");
-    if (back) back.hidden = currentStep === 1;
-
-    var next = document.querySelector("[data-next-step]");
-    if (next) next.hidden = currentStep === totalSteps;
-
-    var submit = document.querySelector("[data-submit-application]");
-    if (submit) submit.hidden = currentStep !== totalSteps;
-
-    if (currentStep === 4) updateRoleSections();
-    if (currentStep === 5) buildReview();
-
-    if (pushHash) history.replaceState(null, "", "#step-" + currentStep);
-    var shell = document.querySelector(".form-shell");
-    if (shell) shell.scrollIntoView({ behavior: "smooth", block: "start" });
+    clearErrors();
+    updateRoleSections();
+    for (const step of steps)
+      step.hidden = +step.dataset.formStep !== currentStep;
+    for (const button of stepButtons) {
+      const num = +button.dataset.stepJump;
+      button.disabled = num > maxVisited;
+      button.setAttribute(
+        "aria-current",
+        num === currentStep ? "step" : "false",
+      );
+      button.dataset.complete =
+        num < maxVisited && errorsFor(num).length === 0 ? "true" : "false";
+    }
+    document.querySelector("[data-current-step-label]").textContent =
+      "Section " + currentStep + " of " + totalSteps;
+    const heading = document.querySelector("[data-current-step-title]");
+    heading.textContent = stepFor(currentStep).dataset.stepTitle;
+    document.querySelector("[data-back-step]").hidden = currentStep === 1;
+    document.querySelector("[data-next-step]").hidden = currentStep === 5;
+    document.querySelector("[data-submit-application]").hidden =
+      currentStep !== 5;
+    if (currentStep === 5) {
+      buildReview();
+      addReviewEdits();
+    }
+    if (push)
+      history.pushState({ step: currentStep }, "", "#section-" + currentStep);
+    if (focus) {
+      heading.focus({ preventScroll: true });
+      document.querySelector(".form-shell").scrollIntoView({ block: "start" });
+    }
   }
-
   function checkedValues(name) {
-    return Array.prototype.slice.call(form.querySelectorAll('input[name="' + name + '"]:checked'))
-      .map(function (field) { return field.dataset.label || field.value; });
+    return Array.prototype.slice
+      .call(form.querySelectorAll('input[name="' + name + '"]:checked'))
+      .map(function (field) {
+        return field.dataset.label || field.value;
+      });
   }
 
   function valueOf(name) {
@@ -209,6 +235,7 @@
     if (!value || (Array.isArray(value) && value.length === 0)) return;
     var row = document.createElement("div");
     row.className = "review-row";
+    row.dataset.reviewStep = reviewStep;
     var term = document.createElement("div");
     term.className = "review-term";
     term.textContent = label;
@@ -225,37 +252,81 @@
     if (!container) return;
     container.innerHTML = "";
 
+    reviewStep = 1;
     addReviewRow(container, "Name", valueOf("name"));
     addReviewRow(container, "Timezone", valueOf("timezone"));
     addReviewRow(container, "Pronouns", valueOf("pronouns") || "Not provided");
     addReviewRow(container, "Age bracket", valueOf("ageGroup"));
+    reviewStep = 3;
     addReviewRow(container, "Experience", valueOf("experience"));
     addReviewRow(container, "What interests you", valueOf("interest"));
     addReviewRow(container, "Critique", valueOf("critique"));
-    addReviewRow(container, "Pokémon-related projects", valueOf("pokemonProjects") || "None provided");
+    addReviewRow(
+      container,
+      "Pokemon-related projects",
+      valueOf("pokemonProjects") || "None provided",
+    );
     addReviewRow(container, "Time commitment", valueOf("timeCommitment"));
-    addReviewRow(container, "Anything else", valueOf("anythingElse") || "Nothing added");
+    addReviewRow(
+      container,
+      "Anything else",
+      valueOf("anythingElse") || "Nothing added",
+    );
+    reviewStep = 2;
     addReviewRow(container, "Roles", checkedValues("roles"));
 
+    reviewStep = 4;
     if (selectedRoles().indexOf("programmer") !== -1) {
-      addReviewRow(container, "Programming background", valueOf("programmingBackground"));
-      addReviewRow(container, "Essentials / RPG Maker XP familiarity", valueOf("essentialsFamiliarity"));
-      addReviewRow(container, "Programming interests", checkedValues("programmerWork"));
-      addReviewRow(container, "Programming examples", valueOf("programmerExamples"));
+      addReviewRow(
+        container,
+        "Programming background",
+        valueOf("programmingBackground"),
+      );
+      addReviewRow(
+        container,
+        "Essentials / RPG Maker XP familiarity",
+        valueOf("essentialsFamiliarity"),
+      );
+      addReviewRow(
+        container,
+        "Programming interests",
+        checkedValues("programmerWork"),
+      );
+      addReviewRow(
+        container,
+        "Programming examples",
+        valueOf("programmerExamples"),
+      );
     }
     if (selectedRoles().indexOf("move-animator") !== -1) {
-      addReviewRow(container, "Move animation experience", valueOf("moveAnimationExperience"));
-      addReviewRow(container, "Move animation examples", valueOf("moveAnimationExamples"));
+      addReviewRow(
+        container,
+        "Move animation experience",
+        valueOf("moveAnimationExperience"),
+      );
+      addReviewRow(
+        container,
+        "Move animation examples",
+        valueOf("moveAnimationExamples"),
+      );
     }
     if (selectedRoles().indexOf("spriter") !== -1) {
-      addReviewRow(container, "Spriting areas", checkedValues("spritingAbilities"));
-      addReviewRow(container, "Spriting portfolio", valueOf("spriterPortfolio"));
-      addReviewRow(container, "Style comfort", valueOf("spriterStyle"));
+      addReviewRow(
+        container,
+        "Spriting areas",
+        checkedValues("spritingAbilities"),
+      );
+      addReviewRow(
+        container,
+        "Spriting portfolio",
+        valueOf("spriterPortfolio"),
+      );
+      addReviewRow(container, "Spriting styles", valueOf("spriterStyle"));
       addReviewRow(container, "Art experience", valueOf("spriterExperience"));
     }
     if (selectedRoles().indexOf("music") !== -1) {
       addReviewRow(container, "Music portfolio", valueOf("musicPortfolio"));
-      addReviewRow(container, "Style comfort", valueOf("musicStyle"));
+      addReviewRow(container, "Music styles", valueOf("musicStyle"));
       addReviewRow(container, "Music experience", valueOf("musicExperience"));
     }
   }
@@ -266,7 +337,7 @@
         name: valueOf("name"),
         timezone: valueOf("timezone"),
         pronouns: valueOf("pronouns") || null,
-        ageGroup: valueOf("ageGroup")
+        ageGroup: valueOf("ageGroup"),
       },
       general: {
         experience: valueOf("experience"),
@@ -274,128 +345,259 @@
         critique: valueOf("critique"),
         pokemonProjects: valueOf("pokemonProjects") || null,
         timeCommitment: valueOf("timeCommitment"),
-        anythingElse: valueOf("anythingElse") || null
+        anythingElse: valueOf("anythingElse") || null,
       },
       roles: selectedRoles(),
       roleDetails: {
-        programmer: selectedRoles().indexOf("programmer") !== -1 ? {
-          background: valueOf("programmingBackground"),
-          essentialsFamiliarity: valueOf("essentialsFamiliarity"),
-          interests: checkedValues("programmerWork"),
-          examples: valueOf("programmerExamples") || null
-        } : null,
-        moveAnimator: selectedRoles().indexOf("move-animator") !== -1 ? {
-          experience: valueOf("moveAnimationExperience"),
-          examples: valueOf("moveAnimationExamples") || null
-        } : null,
-        spriter: selectedRoles().indexOf("spriter") !== -1 ? {
-          abilities: checkedValues("spritingAbilities"),
-          portfolio: valueOf("spriterPortfolio") || null,
-          styleComfort: valueOf("spriterStyle"),
-          experience: valueOf("spriterExperience") || null
-        } : null,
-        music: selectedRoles().indexOf("music") !== -1 ? {
-          portfolio: valueOf("musicPortfolio") || null,
-          styleComfort: valueOf("musicStyle"),
-          experience: valueOf("musicExperience") || null
-        } : null
-      }
+        programmer:
+          selectedRoles().indexOf("programmer") !== -1
+            ? {
+                background: valueOf("programmingBackground"),
+                essentialsFamiliarity: valueOf("essentialsFamiliarity"),
+                interests: checkedValues("programmerWork"),
+                examples: valueOf("programmerExamples") || null,
+              }
+            : null,
+        moveAnimator:
+          selectedRoles().indexOf("move-animator") !== -1
+            ? {
+                experience: valueOf("moveAnimationExperience"),
+                examples: valueOf("moveAnimationExamples") || null,
+              }
+            : null,
+        spriter:
+          selectedRoles().indexOf("spriter") !== -1
+            ? {
+                abilities: checkedValues("spritingAbilities"),
+                portfolio: valueOf("spriterPortfolio") || null,
+                styleComfort: valueOf("spriterStyle"),
+                experience: valueOf("spriterExperience") || null,
+              }
+            : null,
+        music:
+          selectedRoles().indexOf("music") !== -1
+            ? {
+                portfolio: valueOf("musicPortfolio") || null,
+                styleComfort: valueOf("musicStyle"),
+                experience: valueOf("musicExperience") || null,
+              }
+            : null,
+      },
     };
   }
 
+  function addReviewEdits() {
+    const rows = [...document.querySelectorAll("#review-list .review-row")];
+    const sections = [
+      ["Your profile", 1],
+      ["Roles", 2],
+      ["Background", 3],
+      ["Role questions", 4],
+    ].map(([title, step]) => [
+      title,
+      step,
+      rows.filter((row) => +row.dataset.reviewStep === step),
+    ]);
+    const parent = document.getElementById("review-list");
+    parent.replaceChildren();
+    for (const [title, step, items] of sections) {
+      if (!items.length) continue;
+      const group = document.createElement("section");
+      group.className = "review-group";
+      const bar = document.createElement("div");
+      bar.className = "review-heading";
+      const h = document.createElement("h3");
+      h.textContent = title;
+      const edit = document.createElement("button");
+      edit.type = "button";
+      edit.className = "text-button";
+      edit.textContent = "Edit";
+      edit.setAttribute("aria-label", "Edit " + title.toLowerCase());
+      edit.addEventListener("click", () => {
+        showStep(step);
+        saveDraft();
+      });
+      bar.append(h, edit);
+      group.append(bar, ...items);
+      parent.append(group);
+    }
+  }
   async function submitApplication() {
-    for (var stepNumber = 1; stepNumber < totalSteps; stepNumber += 1) {
-      if (!validateVisibleStep(stepNumber)) {
-        showStep(stepNumber, true);
+    if (currentStep !== totalSteps || submitting) return;
+    for (let n = 1; n < 5; n++) {
+      const errors = errorsFor(n);
+      if (errors.length) {
+        showStep(n);
+        renderErrors(errors);
         return;
       }
     }
-    showStep(totalSteps, false);
-    clearErrors();
-    var apiBase = helpers.apiBase;
-    var message = document.getElementById("submit-message");
-    var button = document.querySelector("[data-submit-application]");
-
-    if (!apiBase) {
+    const message = document.getElementById("submit-message"),
+      button = document.querySelector("[data-submit-application]");
+    if (!helpers.apiBase) {
+      saveDraft(true);
       message.className = "notice-strip info";
-      message.textContent = "The form is ready, but live submissions are not connected yet. Connect the Cloudflare backend before opening applications.";
+      message.textContent =
+        "Preview complete. Nothing has been submitted. Your draft is still available in this tab.";
       message.hidden = false;
-      message.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      document.querySelector("[data-after-preview]").hidden = false;
+      message.focus();
       return;
     }
-
+    submitting = true;
     button.disabled = true;
     button.textContent = "Submitting…";
     message.hidden = true;
-
     try {
-      var response = await fetch(apiBase + "/api/application", {
+      const response = await fetch(helpers.apiBase + "/api/application", {
         method: "POST",
         credentials: "include",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify(payload())
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload()),
       });
-      var result = await response.json().catch(function () { return {}; });
-      if (!response.ok) throw new Error(result.message || "Your application could not be submitted.");
-
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok)
+        throw new Error(
+          result.message ||
+            "Your application could not be submitted. Your answers are still here.",
+        );
+      storage.clear();
+      dirty = false;
       message.className = "notice-strip success";
-      message.textContent = "Application submitted. You can now check its progress from My Application.";
+      message.textContent =
+        "Application submitted. You can check its progress in My application.";
       message.hidden = false;
-      form.querySelectorAll("input, textarea, select, button").forEach(function (control) {
+      document.querySelector("[data-after-preview]").hidden = false;
+      for (const control of form.querySelectorAll(
+        "input,textarea,select,button",
+      ))
         control.disabled = true;
-      });
-      message.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      for (const b of stepButtons) b.disabled = true;
+      document.querySelector("[data-draft-state]").textContent =
+        "Application submitted.";
     } catch (error) {
       message.className = "notice-strip error";
-      message.textContent = error.message || "Your application could not be submitted. Please try again.";
+      message.textContent = error.message;
       message.hidden = false;
       button.disabled = false;
       button.textContent = "Submit application";
-      message.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    } finally {
+      submitting = false;
+      message.focus();
     }
   }
-
-  document.querySelector("[data-next-step]").addEventListener("click", function () {
-    if (!validateVisibleStep(currentStep)) return;
-    showStep(currentStep + 1, true);
+  document.querySelector("[data-next-step]").addEventListener("click", () => {
+    const errors = errorsFor(currentStep);
+    if (errors.length) return renderErrors(errors);
+    showStep(currentStep + 1);
+    saveDraft();
   });
-
-  document.querySelector("[data-back-step]").addEventListener("click", function () {
-    clearErrors();
-    showStep(currentStep - 1, true);
+  document.querySelector("[data-back-step]").addEventListener("click", () => {
+    showStep(currentStep - 1);
+    saveDraft();
   });
-
-  stepButtons.forEach(function (button) {
-    button.addEventListener("click", function () {
-      var target = Number(button.dataset.stepJump);
-      if (target <= maxVisited) showStep(target, true);
+  for (const button of stepButtons)
+    button.addEventListener("click", () => {
+      if (+button.dataset.stepJump <= maxVisited) {
+        showStep(+button.dataset.stepJump);
+        saveDraft();
+      }
     });
+  document
+    .querySelector("[data-submit-application]")
+    .addEventListener("click", submitApplication);
+  form.addEventListener("submit", (e) => e.preventDefault());
+  form.addEventListener("input", () => {
+    dirty = true;
+    previewFinished = false;
+    saveDraft();
+    document.getElementById("submit-message").hidden = true;
+    document.querySelector("[data-after-preview]").hidden = true;
   });
-
-  form.querySelectorAll('input[name="roles"]').forEach(function (input) {
-    input.addEventListener("change", updateRoleSections);
-  });
-
-  var requestedRole = new URLSearchParams(window.location.search).get("role");
-  if (requestedRole) {
-    var requestedRoleInput = form.querySelector('input[name="roles"][value="' + requestedRole.replace(/"/g, "") + '"]');
-    if (requestedRoleInput) requestedRoleInput.checked = true;
+  for (const input of form.querySelectorAll('input[name="roles"]'))
+    input.addEventListener("change", () => {
+      updateRoleSections();
+      saveDraft();
+    });
+  for (const field of form.querySelectorAll("input[id],textarea[id]")) {
+    const hint = field.closest(".field")?.querySelector(".field-help");
+    if (hint) {
+      hint.id = "hint-" + field.id;
+      field.setAttribute("aria-describedby", hint.id);
+    }
   }
-
-  form.addEventListener("input", function (event) {
-    event.target.removeAttribute("aria-invalid");
-    var holder = event.target.closest(".has-error");
-    if (holder) {
-      holder.classList.remove("has-error");
-      var old = holder.querySelector(".field-error");
-      if (old) old.remove();
+  const draft = storage.read();
+  if (draft?.version === 1 && draft.values) {
+    previewFinished = !!draft.previewComplete;
+    for (const field of form.querySelectorAll("[name]")) {
+      const value = draft.values[field.name];
+      if (Array.isArray(value)) field.checked = value.includes(field.value);
+      else if (typeof value === "string") field.value = value;
+    }
+    maxVisited = Math.min(5, Math.max(1, +draft.maxVisited || 1));
+    currentStep = Math.min(maxVisited, Math.max(1, +draft.step || 1));
+    document.querySelector("[data-draft-state]").textContent =
+      "Draft restored in this tab. Nothing sent.";
+  }
+  const role = new URLSearchParams(location.search).get("role");
+  const requested = [...form.querySelectorAll('input[name="roles"]')].find(
+    (f) => f.value === role,
+  );
+  if (requested) {
+    requested.checked = true;
+    currentStep = 1;
+  }
+  document.querySelector("[data-submit-application]").textContent =
+    helpers.apiBase ? "Submit application" : "Finish preview";
+  document.querySelector("[data-clear-draft]").addEventListener("click", () => {
+    document.querySelector("[data-draft-confirm]").hidden = false;
+    document.querySelector("[data-cancel-clear]").focus();
+  });
+  document
+    .querySelector("[data-cancel-clear]")
+    .addEventListener("click", () => {
+      document.querySelector("[data-draft-confirm]").hidden = true;
+      document.querySelector("[data-clear-draft]").focus();
+    });
+  document
+    .querySelector("[data-confirm-clear]")
+    .addEventListener("click", () => {
+      document.querySelector("[data-draft-confirm]").hidden = true;
+      storage.clear();
+      form.reset();
+      dirty = false;
+      previewFinished = false;
+      maxVisited = 1;
+      history.replaceState({ step: 1 }, "", location.pathname);
+      showStep(1, false);
+      document.querySelector("[data-draft-state]").textContent =
+        "Draft cleared. Nothing sent.";
+      document.getElementById("submit-message").hidden = true;
+      document.querySelector("[data-after-preview]").hidden = true;
+    });
+  addEventListener("popstate", () => {
+    const match = location.hash.match(/^#section-([1-5])$/);
+    showStep(Math.min(match ? +match[1] : 1, maxVisited), false);
+    saveDraft();
+  });
+  addEventListener("beforeunload", (e) => {
+    if (dirty && !saveDraft()) {
+      e.preventDefault();
+      e.returnValue = "";
     }
   });
-
-  document.querySelector("[data-submit-application]").addEventListener("click", submitApplication);
-
-  var hashMatch = window.location.hash.match(/^#step-(\d)$/);
-  var initialStep = hashMatch ? Number(hashMatch[1]) : 1;
-  maxVisited = Math.max(1, initialStep);
-  showStep(initialStep, false);
-}());
+  if (!helpers.apiBase) {
+    document.querySelector("[data-submit-explanation]").textContent =
+      "Finish preview checks your answers and keeps your draft in this tab. Nothing will be sent.";
+    stepFor(5).dataset.stepTitle = "Review your answers";
+  }
+  showStep(currentStep, false, false);
+  history.replaceState(
+    { step: currentStep },
+    "",
+    location.pathname + "#section-" + currentStep,
+  );
+})();

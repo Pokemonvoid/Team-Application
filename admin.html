@@ -1,26 +1,235 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex,nofollow">
-  <title>Director Portal · Pokémon Void Recruitment</title>
-  <link rel="stylesheet" href="assets/css/site.css">
-  <script defer src="assets/js/config.js"></script><script defer src="assets/js/site.js"></script><script defer src="assets/js/portal.js"></script>
-</head>
-<body data-portal-page="admin">
-<a class="skip-link" href="#main">Skip to main content</a>
-<header class="site-header"><div class="header-inner"><a class="brand" href="index.html" aria-label="Pokémon Void Recruitment home"><svg class="pokeball-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><circle cx="20" cy="20" r="18" fill="#efedeb"/><path d="M2 20a18 18 0 0 1 36 0H2z" fill="#cf4655"/><path d="M2.7 20h34.6" stroke="#111016" stroke-width="6"/><circle cx="20" cy="20" r="8" fill="#111016"/><circle cx="20" cy="20" r="4.2" fill="#efedeb"/><circle cx="20" cy="20" r="18" fill="none" stroke="#efedeb" stroke-width="2.2"/></svg><span class="brand-copy"><span class="brand-name">Pokémon Void</span><span class="brand-sub">director access</span></span></a></div></header>
-<main id="main">
-  <div class="page-heading"><p class="crumbline">directors only</p><h1>Recruitment desk</h1><p>The page itself is public code. The data is not: every protected request still has to pass Director authentication on the backend.</p></div>
-  <div id="admin-message" hidden></div>
-  <section id="admin-locked" class="file-panel" hidden><div class="panel-header"><h2>Access required</h2></div><div class="board-body"><h2>Director access only</h2><p style="margin-top:8px;color:#b8aebf;">Sign in with an authorised Discord account. Being able to open this page does not grant access to recruitment data.</p><a class="button primary" href="#" data-discord-login>Sign in with Discord</a></div></section>
-  <section id="admin-shell" class="admin-shell" hidden>
-    <div class="panel-header"><h2>Application Queue</h2><span class="board-stamp">Director only</span></div>
-    <div class="admin-toolbar" aria-label="Filter applications"><button class="filter-button" type="button" data-queue-filter="all" aria-pressed="true">All</button><button class="filter-button" type="button" data-queue-filter="submitted" aria-pressed="false">New</button><button class="filter-button" type="button" data-queue-filter="flagged" aria-pressed="false">Flagged</button><button class="filter-button" type="button" data-queue-filter="in-review" aria-pressed="false">In review</button><button class="filter-button" type="button" data-queue-filter="interview" aria-pressed="false">Interview</button><button class="filter-button" type="button" data-queue-filter="on-hold" aria-pressed="false">On hold</button></div>
-    <table class="queue-table"><thead><tr><th>Applicant</th><th>Role(s)</th><th>Status</th><th>Submitted</th><th>Handler</th></tr></thead><tbody data-queue-body></tbody></table>
-    <div class="queue-empty" data-queue-empty>No applications in this queue.</div>
-  </section>
-</main>
-<footer class="site-footer"><div class="footer-inner"><span>Pokémon Void Director Recruitment Portal</span><span class="footer-links"><a href="index.html">Public site</a></span></div></footer>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Director Portal · Pokemon Void Recruitment</title>
+    <link rel="stylesheet" href="assets/css/site.css" />
+    <script defer src="assets/js/config.js"></script>
+    <script defer src="assets/js/site.js"></script>
+    <script defer src="assets/js/portal.js"></script>
+    <link
+      rel="icon"
+      type="image/png"
+      href="assets/brand/void-mark-outlined.png"
+    />
+  </head>
+  <body data-portal-page="admin">
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a
+          class="brand"
+          href="index.html"
+          aria-label="Pokemon Void Recruitment home"
+          ><img
+            class="void-mark"
+            src="assets/brand/void-mark-outlined.png"
+            width="64"
+            height="64"
+            alt=""
+          /><span class="brand-copy"
+            ><span class="brand-name">Pokemon <b>Void</b></span
+            ><span class="brand-sub">Development team</span></span
+          ></a
+        ><button
+          class="mobile-menu-button"
+          type="button"
+          data-menu-button
+          aria-expanded="false"
+          aria-controls="site-nav"
+        >
+          Menu
+        </button>
+        <nav
+          id="site-nav"
+          class="site-nav"
+          data-site-nav
+          aria-label="Main navigation"
+        >
+          <a href="index.html">Recruitment</a><a href="apply.html">Apply</a
+          ><a href="status.html">My application</a><a href="help.html">Help</a>
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      <div class="page-heading">
+        <p class="crumbline">For recruitment Directors</p>
+        <h1>Recruitment desk</h1>
+        <p>
+          Review applications, keep track of who is handling them, and move
+          applicants through recruitment.
+        </p>
+      </div>
+      <div id="admin-message" role="status" hidden></div>
+      <section id="admin-locked" class="file-panel" hidden>
+        <div class="board-body">
+          <h2>Director access required</h2>
+          <p>
+            Sign in with an authorised Discord account to view recruitment
+            records.
+          </p>
+          <a class="button primary" href="#" data-discord-login
+            >Continue with Discord</a
+          >
+        </div>
+      </section>
+      <section id="admin-shell" class="admin-shell" hidden>
+        <div class="panel-header">
+          <h2>Application queue</h2>
+          <span class="board-stamp" data-queue-count></span>
+        </div>
+        <div class="admin-toolbar" aria-label="Filter applications">
+          <button
+            class="filter-button"
+            type="button"
+            data-queue-filter="all"
+            aria-pressed="true"
+          >
+            All</button
+          ><button
+            class="filter-button"
+            type="button"
+            data-queue-filter="submitted"
+            aria-pressed="false"
+          >
+            New</button
+          ><button
+            class="filter-button"
+            type="button"
+            data-queue-filter="flagged"
+            aria-pressed="false"
+          >
+            Flagged</button
+          ><button
+            class="filter-button"
+            type="button"
+            data-queue-filter="in-review"
+            aria-pressed="false"
+          >
+            In review</button
+          ><button
+            class="filter-button"
+            type="button"
+            data-queue-filter="interview"
+            aria-pressed="false"
+          >
+            Interview</button
+          ><button
+            class="filter-button"
+            type="button"
+            data-queue-filter="on-hold"
+            aria-pressed="false"
+          >
+            On hold</button
+          ><button
+            class="filter-button"
+            type="button"
+            data-queue-filter="accepted"
+            aria-pressed="false"
+          >
+            Accepted</button
+          ><button
+            class="filter-button"
+            type="button"
+            data-queue-filter="declined"
+            aria-pressed="false"
+          >
+            Declined</button
+          ><button
+            class="filter-button"
+            type="button"
+            data-queue-filter="archived"
+            aria-pressed="false"
+          >
+            Archived
+          </button>
+        </div>
+        <div class="admin-search">
+          <label for="queue-search">Find an applicant or role</label
+          ><input
+            id="queue-search"
+            type="search"
+            autocomplete="off"
+            placeholder="Name, role or application ID"
+          />
+        </div>
+        <div
+          class="table-scroll"
+          role="region"
+          aria-label="Application queue"
+          tabindex="0"
+        >
+          <table class="queue-table">
+            <thead>
+              <tr>
+                <th scope="col">Applicant</th>
+                <th scope="col">Roles</th>
+                <th scope="col">Status</th>
+                <th scope="col">Submitted</th>
+                <th scope="col">Handler</th>
+              </tr>
+            </thead>
+            <tbody data-queue-body></tbody>
+          </table>
+        </div>
+        <div class="queue-empty" data-queue-empty role="status" hidden>
+          No matching applications.
+        </div>
+      </section>
+      <section
+        class="file-panel director-detail"
+        id="director-detail"
+        hidden
+        aria-labelledby="detail-title"
+      >
+        <div class="panel-header">
+          <h2 id="detail-title" tabindex="-1"></h2>
+          <button class="text-button" type="button" data-close-detail>
+            Close record
+          </button>
+        </div>
+        <div class="board-body">
+          <p class="detail-meta" data-detail-meta></p>
+          <div data-detail-answers></div>
+        </div>
+        <div class="director-actions" data-demo-actions hidden>
+          <button class="button ghost" type="button" data-claim>
+            Claim application
+          </button>
+          <div>
+            <label for="director-status">Move to</label
+            ><select id="director-status">
+              <option>Submitted</option>
+              <option>Flagged</option>
+              <option>In review</option>
+              <option>Interview</option>
+              <option>On hold</option>
+              <option>Accepted</option>
+              <option>Declined</option>
+              <option>Archived</option>
+            </select>
+          </div>
+          <button class="button primary" type="button" data-change-status>
+            Update example
+          </button>
+        </div>
+        <p class="detail-note" data-demo-note hidden>
+          Preview actions affect fictional records only and reset when this page
+          is reloaded.
+        </p>
+        <p class="detail-note" data-detail-feedback role="status"></p>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span>Pokemon Void · PokedexFillers</span>
+        <nav class="footer-links" aria-label="Footer">
+          <a href="https://pokemonvoid.github.io/">Void wiki ↗</a
+          ><a href="privacy.html">Privacy</a><a href="help.html">Help</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
 </html>
